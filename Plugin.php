@@ -1,9 +1,9 @@
-<?php namespace kEERill\Users;
+<?php namespace KEERill\Users;
 
 use App;
 use Backend;
 use System\Classes\PluginBase;
-use kEERill\Users\Models\User;
+use KEERill\Users\Models\User;
 use Illuminate\Foundation\AliasLoader;
 
 
@@ -35,10 +35,10 @@ class Plugin extends PluginBase
     public function register()
     {
         $alias = AliasLoader::getInstance();
-        $alias->alias('Auth', 'kEERill\Users\Facades\Auth');
+        $alias->alias('Auth', 'KEERill\Users\Facades\Auth');
 
         App::singleton('user.auth', function() {
-            return \kEERill\Users\Classes\AuthManager::instance();
+            return \KEERill\Users\Classes\AuthManager::instance();
         });
     }
 
@@ -70,9 +70,9 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            'kEERill\Users\Components\AuthComponent' => 'authComponent',
-            'kEERill\Users\Components\RegisterComponent' => 'registerComponent',
-            'kEERill\Users\Components\SessionComponent' => 'sessionComponent'
+            'KEERill\Users\Components\AuthComponent' => 'authComponent',
+            'KEERill\Users\Components\RegisterComponent' => 'registerComponent',
+            'KEERill\Users\Components\SessionComponent' => 'sessionComponent'
         ];
     }
 
@@ -139,7 +139,7 @@ class Plugin extends PluginBase
                 'description' => 'Управление настройками пользователей',
                 'category'    => 'Пользователи',
                 'icon'        => 'icon-users',
-                'class'       => 'kEERill\Users\Models\Settings',
+                'class'       => 'KEERill\Users\Models\Settings',
                 'order'       => 500
             ]
         ];

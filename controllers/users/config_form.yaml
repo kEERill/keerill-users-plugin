@@ -9,7 +9,7 @@ name: User
 form: $/october/users/models/user/fields.yaml
 
 # Model Class name
-modelClass: kEERill\Users\Models\User
+modelClass: KEERill\Users\Models\User
 
 # Default redirect location
 defaultRedirect: october/users/users

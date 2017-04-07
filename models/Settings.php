@@ -1,9 +1,9 @@
-<?php namespace kEERill\Users\Models;
+<?php namespace KEERill\Users\Models;
 
 use Lang;
 use Model;
 use System\Models\MailTemplate;
-use kEERill\Users\Models\Group;
+use KEERill\Users\Models\Group;
 
 /**
  * Settings Model

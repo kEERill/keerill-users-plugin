@@ -1,4 +1,4 @@
-<?php namespace kEERill\Users\Models;
+<?php namespace KEERill\Users\Models;
 
 use Model;
 
@@ -34,7 +34,7 @@ class Group extends Model
      * @var array Relations
      */
     public $hasMany  = [
-        'users'       => ['kEERill\Users\Models\User', 'table' => 'oc_users']
+        'users'       => ['KEERill\Users\Models\User', 'table' => 'oc_users']
     ];
 
 }

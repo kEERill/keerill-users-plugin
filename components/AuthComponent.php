@@ -1,4 +1,4 @@
-<?php namespace kEERill\Users\Components;
+<?php namespace KEERill\Users\Components;
 
 use Auth;
 use Event;
@@ -11,7 +11,7 @@ use ValidationException;
 use ApplicationException;
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
-use kEERill\Users\Models\Settings as UserSettings;
+use KEERill\Users\Models\Settings as UserSettings;
 
 class AuthComponent extends ComponentBase
 {

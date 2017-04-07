@@ -6,7 +6,7 @@
 list: $/october/users/models/permission/columns.yaml
 
 # Model Class name
-modelClass: kEERill\Users\Models\Permission
+modelClass: KEERill\Users\Models\Permission
 
 # List Title
 title: Manage Permissions

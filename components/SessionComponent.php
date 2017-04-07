@@ -1,4 +1,4 @@
-<?php namespace kEERill\Users\Components;
+<?php namespace KEERill\Users\Components;
 
 use Auth;
 use Cms\Classes\ComponentBase;
@@ -26,7 +26,7 @@ class SessionComponent extends ComponentBase
     /**
      * Returns the logged in user, if available, and touches
      * the last seen timestamp.
-     * @return kEERill\Users\Models\User
+     * @return KEERill\Users\Models\User
      */
     public function user()
     {

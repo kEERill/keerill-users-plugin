@@ -1,9 +1,9 @@
-<?php namespace kEERill\Users\Models;
+<?php namespace KEERill\Users\Models;
 
 use Auth;
 use Request;
 use October\Rain\Database\Model;
-use kEERill\Users\Models\Settings as UserSettings;
+use KEERill\Users\Models\Settings as UserSettings;
 
 /**
  * User Model
@@ -45,7 +45,7 @@ class User extends Model
      * @var array Relations
      */
     public $belongsTo = [
-        'group' => ['kEERill\Users\Models\Group', 'table' => 'oc_users_groups']
+        'group' => ['KEERill\Users\Models\Group', 'table' => 'oc_users_groups']
     ];
 
     public $belongsToMany = [];

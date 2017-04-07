@@ -1,4 +1,4 @@
-<?php namespace kEERill\Users\Classes;
+<?php namespace KEERill\Users\Classes;
 
 use Auth;
 use Closure;
