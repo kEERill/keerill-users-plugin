@@ -8,7 +8,7 @@ scopes:
         # Filter name
         label: Группы
         # Model Class name
-        modelClass: Keerill\Users\Models\Group
+        modelClass: kEERill\Users\Models\Group
         # Model attribute to display for the name
         nameFrom: name
         # Filter scope

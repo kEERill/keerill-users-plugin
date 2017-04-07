@@ -9,7 +9,7 @@ name: Permission
 form: $/october/users/models/permission/fields.yaml
 
 # Model Class name
-modelClass: Keerill\Users\Models\Permission
+modelClass: kEERill\Users\Models\Permission
 
 # Default redirect location
 defaultRedirect: october/users/permissions

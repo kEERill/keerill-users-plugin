@@ -6,7 +6,7 @@
 list: $/october/users/models/group/columns.yaml
 
 # Model Class name
-modelClass: Keerill\Users\Models\Group
+modelClass: kEERill\Users\Models\Group
 
 # List Title
 title: Manage Groups

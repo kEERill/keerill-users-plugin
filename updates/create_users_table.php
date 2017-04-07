@@ -1,4 +1,4 @@
-<?php namespace Keerill\Users\Updates;
+<?php namespace kEERill\Users\Updates;
 
 use Schema;
 use October\Rain\Database\Schema\Blueprint;

@@ -1,4 +1,4 @@
-<?php namespace Keerill\Users\Controllers;
+<?php namespace kEERill\Users\Controllers;
 
 use Flash;
 use BackendMenu;

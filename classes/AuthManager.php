@@ -1,8 +1,8 @@
-<?php namespace Keerill\Users\Classes;
+<?php namespace kEERill\Users\Classes;
 
 use October\Rain\Auth\Manager as RainAuthManager;
-use Keerill\Users\Models\Settings as UserSettings;
-use Keerill\Users\Models\Group as UserGroupModel;
+use kEERill\Users\Models\Settings as UserSettings;
+use kEERill\Users\Models\Group as UserGroupModel;
 use October\Rain\Auth\AuthException;
 
 class AuthManager extends RainAuthManager
@@ -11,11 +11,11 @@ class AuthManager extends RainAuthManager
 
     protected $sessionKey = 'user_auth';
 
-    protected $userModel = 'Keerill\Users\Models\User';
+    protected $userModel = 'kEERill\Users\Models\User';
 
-    protected $groupModel = 'Keerill\Users\Models\Group';
+    protected $groupModel = 'kEERill\Users\Models\Group';
 
-    protected $throttleModel = 'Keerill\Users\Models\Throttle';
+    protected $throttleModel = 'kEERill\Users\Models\Throttle';
 
     public function init()
     {

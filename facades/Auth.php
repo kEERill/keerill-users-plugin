@@ -1,4 +1,4 @@
-<?php namespace Keerill\Users\Facades;
+<?php namespace kEERill\Users\Facades;
 
 use October\Rain\Support\Facade;
 

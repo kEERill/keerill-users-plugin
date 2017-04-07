@@ -1,4 +1,4 @@
-<?php namespace Keerill\Users\Models;
+<?php namespace kEERill\Users\Models;
 
 use Model;
 
@@ -35,7 +35,7 @@ class Permission extends Model
     public $attachMany = [];
 
     public $hasMany = [
-        'users'       => ['Keerill\Users\Models\User'],
-        'groups'      => ['Keerill\Users\Models\Group']
+        'users'       => ['kEERill\Users\Models\User'],
+        'groups'      => ['kEERill\Users\Models\Group']
     ];
 }

@@ -1,4 +1,4 @@
-<?php namespace Keerill\Users\Models;
+<?php namespace kEERill\Users\Models;
 
 use October\Rain\Auth\Models\Throttle as ThrottleBase;
 
@@ -26,7 +26,7 @@ class Throttle extends ThrottleBase
      * @var array Relations
      */
     public $belongsTo = [
-        'user' => 'Keerill\Users\Models\User'
+        'user' => 'kEERill\Users\Models\User'
     ];
     
 }

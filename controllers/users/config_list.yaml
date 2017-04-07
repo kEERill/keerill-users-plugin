@@ -6,7 +6,7 @@
 list: $/october/users/models/user/columns.yaml
 
 # Model Class name
-modelClass: Keerill\Users\Models\User
+modelClass: kEERill\Users\Models\User
 
 # List Title
 title: Управление пользователями

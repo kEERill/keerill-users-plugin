@@ -9,7 +9,7 @@ name: Group
 form: $/october/users/models/group/fields.yaml
 
 # Model Class name
-modelClass: Keerill\Users\Models\Group
+modelClass: kEERill\Users\Models\Group
 
 # Default redirect location
 defaultRedirect: october/users/groups
