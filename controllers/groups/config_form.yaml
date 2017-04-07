@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Group
+
+# Model Form Field configuration
+form: $/october/users/models/group/fields.yaml
+
+# Model Class name
+modelClass: Keerill\Users\Models\Group
+
+# Default redirect location
+defaultRedirect: october/users/groups
+
+# Create page
+create:
+    title: Create Group
+    redirect: october/users/groups/update/:id
+    redirectClose: october/users/groups
+
+# Update page
+update:
+    title: Edit Group
+    redirect: october/users/groups
+    redirectClose: october/users/groups
+
+# Preview page
+preview:
+    title: Preview Group

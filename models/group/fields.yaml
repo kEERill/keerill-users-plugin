@@ -1,0 +1,13 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Название группы
+        span: auto
+
+    code:
+        label: Уникальный код
+        preset: name
+        span: auto

@@ -1,0 +1,30 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+
+    groups:
+        # Filter name
+        label: Группы
+        # Model Class name
+        modelClass: Keerill\Users\Models\Group
+        # Model attribute to display for the name
+        nameFrom: name
+        # Filter scope
+        scope: filterByGroup
+
+    created_date:
+        label: Дата регистрации
+        type: daterange
+        conditions: created_at >= ':after' AND created_at <= ':before'
+
+    activated:
+        # Filter name
+        label: Активированный
+        # Filter type
+        type: switch
+        # SQL conditions
+        conditions:
+            - is_activated = '0'
+            - is_activated = '1'

@@ -1,0 +1,35 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+
+    name:
+        label: Имя
+        searchable: true
+
+    email:
+        label: Почта
+        searchable: true
+
+    group_id:
+        label: Группа
+        relation: group
+        select: name
+        searchable: true
+
+    ip_address:
+        label: IP адресс
+
+    last_seen:
+        label: Последний вход
+        type: datetime
+        format: j M Y H:i
+        default: Никогда
+
+    created_at:
+        label: Дата регистрации
+        type: datetime
+        format: j M Y H:i

@@ -1,0 +1,10 @@
+1.0.1: First version of Users
+1.0.2:
+ - Create Users Table
+ - create_users_table.php
+ - Create User Groups
+ - create_groups_table.php
+ - Create User Permissions
+ - create_permissions_table.php
+ - Create Throttles Table
+ - create_throttles_table.php

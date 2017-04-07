@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: User
+
+# Model Form Field configuration
+form: $/october/users/models/user/fields.yaml
+
+# Model Class name
+modelClass: Keerill\Users\Models\User
+
+# Default redirect location
+defaultRedirect: october/users/users
+
+# Create page
+create:
+    title: Создание пользователя
+    redirect: october/users/users/preview/:id
+    redirectClose: october/users/users
+
+# Update page
+update:
+    title: Редактирования пользователя
+    redirect: october/users/users
+    redirectClose: october/users/users
+
+# Preview page
+preview:
+    title: Просмотр профиля пользователя

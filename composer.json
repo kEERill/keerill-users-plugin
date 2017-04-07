@@ -1,0 +1,24 @@
+{
+    "name": "october/users",
+    "type": "october-plugin",
+    "description": "Users manager",
+    "keywords": ["october", "cms", "users", "plugin"],
+    "license": "MIT",
+
+    "authors": [
+        {
+            "name": "Kirill Popkov",
+            "email": "russia199797@mail.ru",
+            "role": "Co-founder"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "composer/installers": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "October\\Demo\\": ""
+        }
+    }
+}

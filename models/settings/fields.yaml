@@ -1,0 +1,90 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    fields:
+        # Throttle Sign In
+        use_throttle:
+            span: left
+            label: Отслеживание неудачных попыток авторизации
+            comment: При множественных неудачных попытках авторизации пользователь будет заморожен.
+            type: switch
+            tab: Авторизация
+
+        # Prevent concurrent sessions
+        block_persistence:
+            span: right
+            label: Запретить одновременные сеансы
+            comment: Когда активированные пользователи не могут войти на несколько устройств одновременно.
+            type: switch
+            tab: Авторизация
+
+        # Require Activation
+        allow_registration:
+            span: left
+            label: Разрешить регистрацию
+            comment: Если эта опция выключена, только администраторы смогут регистрировать пользователей.
+            type: switch
+            tab: Регистрация
+
+        # Require Activation
+        require_activation:
+            span: left
+            label: Обязательная активация аккаунта
+            comment: Пользователи должны иметь активированный аккаунт для входа.
+            type: switch
+            tab: Активация
+
+        # Activation Mode
+        activate_mode:
+            span: left
+            commentAbove: Активация пользователя.
+            label: Активация
+            type: radio
+            tab: Активация
+
+        # Hint
+        template_hint:
+            type: hint
+            path: $/october/users/models/settings/_template_hint.htm
+            tab: Оповещение
+
+        # Welcome Template
+        welcome_template:
+            label: Шаблон приветствия
+            comment: Шаблон сообщения, отправляемого после активации.
+            type: dropdown
+            default: rainlab.user::mail.activate
+            tab: Оповещение
+
+        group_banned:
+            label: Группа заблокированного пользователя
+            comment: Группа присваивается, когда пользователь заблокирован
+            span: left
+            type: dropdown
+            options: getGroups
+            tab: Настройка групп
+
+        group_activated:
+            label: Группа активированного пользователя
+            comment: Группа присваивается, когда пользователь активировал свой аккаунт
+            span: right
+            type: dropdown
+            options: getGroups
+            tab: Настройка групп
+
+        group_guest:
+            label: Группа не авторизированного пользователя
+            span: left
+            type: dropdown
+            options: getGroups
+            tab: Настройка групп
+
+        group_no_activated:
+            label: Группа не активированного пользователя
+            comment: Группа присваивается, когда пользователь не активировал свой аккаунт
+            span: right
+            type: dropdown
+            options: getGroups
+            tab: Настройка групп

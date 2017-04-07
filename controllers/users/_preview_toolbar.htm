@@ -1,0 +1,21 @@
+<a
+    href="<?= Backend::url('october/users/users') ?>"
+    class="btn btn-default oc-icon-chevron-left">
+    Вернуться к списку пользователей
+</a>
+<a
+    href="<?= Backend::url('october/users/users/update/'.$formModel->id) ?>"
+    class="btn btn-primary oc-icon-pencil">
+    Редактировать
+</a>
+ <?php if (!$formModel->isBanned()): ?>
+    <a
+        href="javascript:;"
+        class="btn btn-default"
+        data-request="onBan"
+        data-request-confirm="Вы действительно хотите заблокировать этого пользователя?"
+        data-stripe-load-indicator
+    >Заблокировать пользователя</a>
+<?php endif; ?>
+
+

@@ -1,0 +1,29 @@
+<div class="scoreboard-item title-value">
+    <h4>Пользователь</h4>
+        <p><?= e($formModel->name) ?></p>
+    <p class="description">
+        <a href="mailto:<?= e($formModel->email) ?>">
+            <?= e($formModel->email) ?>
+        </a>
+    </p>
+</div>
+<div class="scoreboard-item title-value">
+    <h4>Присоединился</h4>
+    <?php if($formModel->created_at): ?>
+        <p title="<?= $formModel->created_at->diffForHumans() ?>">
+            <?= $formModel->created_at->toFormattedDateString() ?>
+        </p>
+        <?php else: ?>
+            <p title="Нет данных">
+                Неизвестно
+            </p>
+        <?php endif ?>
+    <p class="description">
+        Статус: <?= $formModel->is_activated ? e('Активированный') : e('Ожидает активации') ?>
+    </p>
+</div>
+
+<div class="scoreboard-item title-value">
+    <h4>Последний вход</h4>
+    <p><?= $formModel->last_seen ? $formModel->last_seen->toFormattedDateString() : e('Никогда') ?></p>
+</div>

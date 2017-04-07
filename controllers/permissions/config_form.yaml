@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Permission
+
+# Model Form Field configuration
+form: $/october/users/models/permission/fields.yaml
+
+# Model Class name
+modelClass: Keerill\Users\Models\Permission
+
+# Default redirect location
+defaultRedirect: october/users/permissions
+
+# Create page
+create:
+    title: Create Permission
+    redirect: october/users/permissions/update/:id
+    redirectClose: october/users/permissions
+
+# Update page
+update:
+    title: Edit Permission
+    redirect: october/users/permissions
+    redirectClose: october/users/permissions
+
+# Preview page
+preview:
+    title: Preview Permission
