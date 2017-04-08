@@ -20,6 +20,6 @@ class Permissions extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('October.Users', 'users', 'permissions');
+        BackendMenu::setContext('KEERill.Users', 'users', 'permissions');
     }
 }

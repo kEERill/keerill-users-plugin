@@ -20,7 +20,7 @@ class Groups extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('October.Users', 'users', 'groups');
+        BackendMenu::setContext('KEERill.Users', 'users', 'groups');
     }
 
 }

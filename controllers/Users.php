@@ -26,7 +26,7 @@ class Users extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('October.Users', 'users', 'users');
+        BackendMenu::setContext('KEERill.Users', 'users', 'users');
     }
 
     /**
