@@ -6,25 +6,25 @@
 name: Group
 
 # Model Form Field configuration
-form: $/october/users/models/group/fields.yaml
+form: $/keerill/users/models/group/fields.yaml
 
 # Model Class name
 modelClass: KEERill\Users\Models\Group
 
 # Default redirect location
-defaultRedirect: october/users/groups
+defaultRedirect: keerill/users/groups
 
 # Create page
 create:
     title: Create Group
-    redirect: october/users/groups/update/:id
-    redirectClose: october/users/groups
+    redirect: keerill/users/groups/update/:id
+    redirectClose: keerill/users/groups
 
 # Update page
 update:
     title: Edit Group
-    redirect: october/users/groups
-    redirectClose: october/users/groups
+    redirect: keerill/users/groups
+    redirectClose: keerill/users/groups
 
 # Preview page
 preview:

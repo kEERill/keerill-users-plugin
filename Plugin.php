@@ -104,7 +104,7 @@ class Plugin extends PluginBase
         return [
             'users' => [
                 'label'       => 'Пользователи',
-                'url'         => Backend::url('october/users/users'),
+                'url'         => Backend::url('keerill/users/users'),
                 'icon'        => 'icon-user',
                 'permissions' => ['october.users.*'],
                 'order'       => 500,
@@ -113,18 +113,18 @@ class Plugin extends PluginBase
                     'users' => [
                         'label'       => 'Управление пользователями',
                         'icon'        => 'icon-user',
-                        'url'         => Backend::url('october/users/users')
+                        'url'         => Backend::url('keerill/users/users')
                     ],
 
                     'groups' => [
                         'label'       => 'Управление группами',
                         'icon'        => 'icon-users',
-                        'url'         => Backend::url('october/users/groups')
+                        'url'         => Backend::url('keerill/users/groups')
                     ],
                     'permissions' => [
                         'label'       => 'Управление правами',
                         'icon'        => 'icon-users',
-                        'url'         => Backend::url('october/users/permissions')
+                        'url'         => Backend::url('keerill/users/permissions')
                     ]
                 ]   
             ],

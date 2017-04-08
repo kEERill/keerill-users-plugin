@@ -47,7 +47,7 @@ tabs:
         # Hint
         template_hint:
             type: hint
-            path: $/october/users/models/settings/_template_hint.htm
+            path: $/keerill/users/models/settings/_template_hint.htm
             tab: Оповещение
 
         # Welcome Template

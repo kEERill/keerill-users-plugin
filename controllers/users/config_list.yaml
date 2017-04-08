@@ -3,7 +3,7 @@
 # ===================================
 
 # Model List Column configuration
-list: $/october/users/models/user/columns.yaml
+list: $/keerill/users/models/user/columns.yaml
 
 # Model Class name
 modelClass: KEERill\Users\Models\User
@@ -12,7 +12,7 @@ modelClass: KEERill\Users\Models\User
 title: Управление пользователями
 
 # Link URL for each record
-recordUrl: october/users/users/preview/:id
+recordUrl: keerill/users/users/preview/:id
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records

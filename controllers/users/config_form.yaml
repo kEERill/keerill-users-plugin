@@ -6,25 +6,25 @@
 name: User
 
 # Model Form Field configuration
-form: $/october/users/models/user/fields.yaml
+form: $/keerill/users/models/user/fields.yaml
 
 # Model Class name
 modelClass: KEERill\Users\Models\User
 
 # Default redirect location
-defaultRedirect: october/users/users
+defaultRedirect: keerill/users/users
 
 # Create page
 create:
     title: Создание пользователя
-    redirect: october/users/users/preview/:id
-    redirectClose: october/users/users
+    redirect: keerill/users/users/preview/:id
+    redirectClose: keerill/users/users
 
 # Update page
 update:
     title: Редактирования пользователя
-    redirect: october/users/users
-    redirectClose: october/users/users
+    redirect: keerill/users/users
+    redirectClose: keerill/users/users
 
 # Preview page
 preview:

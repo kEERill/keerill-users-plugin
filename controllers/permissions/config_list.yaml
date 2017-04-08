@@ -3,7 +3,7 @@
 # ===================================
 
 # Model List Column configuration
-list: $/october/users/models/permission/columns.yaml
+list: $/keerill/users/models/permission/columns.yaml
 
 # Model Class name
 modelClass: KEERill\Users\Models\Permission
@@ -12,7 +12,7 @@ modelClass: KEERill\Users\Models\Permission
 title: Manage Permissions
 
 # Link URL for each record
-recordUrl: october/users/permissions/update/:id
+recordUrl: keerill/users/permissions/update/:id
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records

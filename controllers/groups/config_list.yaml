@@ -3,7 +3,7 @@
 # ===================================
 
 # Model List Column configuration
-list: $/october/users/models/group/columns.yaml
+list: $/keerill/users/models/group/columns.yaml
 
 # Model Class name
 modelClass: KEERill\Users\Models\Group
@@ -12,7 +12,7 @@ modelClass: KEERill\Users\Models\Group
 title: Manage Groups
 
 # Link URL for each record
-recordUrl: october/users/groups/update/:id
+recordUrl: keerill/users/groups/update/:id
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records
