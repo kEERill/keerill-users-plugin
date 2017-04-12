@@ -1,6 +1,7 @@
 <?php namespace KEERill\Users\Components;
 
 use Auth;
+use Event;
 use Cms\Classes\ComponentBase;
 
 class SessionComponent extends ComponentBase
@@ -35,4 +36,25 @@ class SessionComponent extends ComponentBase
         }
         return $user;
     }
+
+    
+    /**
+     * Logout user. Use "<a data-request="onLogout" data-request-data="redirect: '/good-bye'">Sign out</a>"
+     * @return redirect
+     */
+
+     public function onLogout()
+     {
+         $user = Auth::getUser();
+
+         if($user) {
+            Event::fire('keerill.users.logout', [$user]);
+         }
+
+         Auth::logout();
+
+        $url = post('redirect', Request::fullUrl());
+
+        return Redirect::to($url);
+     }
 }
