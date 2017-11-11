@@ -10,7 +10,7 @@
     <?php Block::put('form-contents') ?>
 
 
-        <?php if ($formModel->isBanned()): ?>
+        <?php if ($formModel->is_banned): ?>
             <?= $this->makePartial('hint_banned') ?>
         <?php elseif (!$formModel->is_activated): ?>
             <?= $this->makePartial('hint_activate') ?>
@@ -49,8 +49,8 @@
     <?php Block::endPut() ?>
     
 <?php else: ?>
-
-    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-    <p><a href="<?= Backend::url('keerill/users/users') ?>" class="btn btn-default">Вернуться к списку</a></p>
-
+    <div class="p-x">
+        <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+        <p><a href="<?= Backend::url('keerill/users/users') ?>" class="btn btn-default">Вернуться к списку</a></p>
+    </div>
 <?php endif ?>

@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: User
+name: Пользователь
 
 # Model Form Field configuration
 form: $/keerill/users/models/user/fields.yaml
@@ -23,9 +23,10 @@ create:
 # Update page
 update:
     title: Редактирования пользователя
-    redirect: keerill/users/users
+    redirect: keerill/users/users/update/:id
     redirectClose: keerill/users/users
 
 # Preview page
 preview:
     title: Просмотр профиля пользователя
+    redirect: keerill/users/users/preview/:id

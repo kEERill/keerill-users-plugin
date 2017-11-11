@@ -1,0 +1,15 @@
+<form
+    data-request="{{ __SELF__ }}::onRestorePassword"
+    data-request-update="'{{ __SELF__ }}::reset': '#partialUserResetForm'"
+    data-request-flash>
+
+    <label for="userRestoreEmail">Email</label>
+    <input 
+        name="email" 
+        type="email" 
+        class="form-control" 
+        id="userRestoreEmail" 
+        placeholder="Enter your email" />
+    
+    <button type="submit">Restore password</button>
+</form>

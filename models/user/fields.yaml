@@ -45,6 +45,12 @@ tabs:
             span: right
             context: [create, update]
 
+        revision_history:
+            tab: Изменения
+            type: partial
+            path: field_revisions
+            context: [update, preview]
+
 secondaryTabs:
     fields:
 

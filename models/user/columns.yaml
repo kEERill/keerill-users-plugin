@@ -21,7 +21,7 @@ columns:
         searchable: true
 
     ip_address:
-        label: IP адресс
+        label: IP адрес
 
     last_seen:
         label: Последний вход

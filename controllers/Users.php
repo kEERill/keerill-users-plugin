@@ -1,9 +1,10 @@
 <?php namespace KEERill\Users\Controllers;
 
 use Flash;
+use Exception;
 use BackendMenu;
 use Backend\Classes\Controller;
-use Illuminate\Support\Facades\Request;
+use KEERill\Users\Models\Settings as UserSettings;
 
 /**
  * Users Back-end Controller
@@ -12,21 +13,27 @@ class Users extends Controller
 {
     public $implement = [
         'Backend.Behaviors.FormController',
+        'Backend.Behaviors.RelationController',
         'Backend.Behaviors.ListController'
     ];
 
     public $formConfig = 'config_form.yaml';
     public $listConfig = 'config_list.yaml';
+    public $relationConfig = 'config_relation.yaml';
 
-    public $requiredPermissions = ['october.users.access_users'];
+    public $requiredPermissions = ['keerill.users.access_users'];
     
     public $bodyClass = 'compact-container';
+
+    protected $bannedFormWidget;
 
     public function __construct()
     {
         parent::__construct();
 
         BackendMenu::setContext('KEERill.Users', 'users', 'users');
+
+        $this->createFormBanned();
     }
 
     /**
@@ -34,7 +41,7 @@ class Users extends Controller
      */
     public function listInjectRowClass($record, $definition = null)
     {
-        if($record->isBanned()) {
+        if($record->is_banned) {
             return 'negative';
         }
         if (!$record->is_activated) {
@@ -42,9 +49,38 @@ class Users extends Controller
         }
     }
 
-    public function formBeforeCreate($model)
+    /**
+     * {@inheritDoc}
+     */
+    public function formExtendFields($widget)
     {
-        $model->ip_address = Request::ip();
+        if (UserSettings::get('use_logs')) {
+            $widget->addTabFields([
+                'logs' => [
+                    'tab' => 'Активность',
+                    'type' => 'partial',
+                    'path' => 'field_logs',
+                    'context' => [
+                        'update',
+                        'preview'
+                    ]
+                ]
+            ]);
+        }
+
+        if (UserSettings::get('use_access_logs')) {
+            $widget->addTabFields([
+                'accesslogs' => [
+                    'tab' => 'Доступ',
+                    'type' => 'partial',
+                    'path' => 'field_accesslogs',
+                    'context' => [
+                        'update',
+                        'preview'
+                    ]
+                ]
+            ]);
+        }
     }
     
     public function preview_onActivate($recordId = null)
@@ -54,33 +90,60 @@ class Users extends Controller
         
         Flash::success('Пользователь успешно активирован');
 
-        if ($redirect = $this->makeRedirect('update-close', $model)) {
+        if ($redirect = $this->makeRedirect('preview', $model)) {
             return $redirect;
         }
+    }
+
+    public function preview_onLoadFormBanned($recordId = null) 
+    {
+        return $this->makePartial('popup_form', [
+            'widget' => $this->bannedFormWidget,
+            'options' => [
+                'title' => 'Блокировка пользователя',
+                'request' => 'onBan',
+                'form_btn' => 'Сохранить'
+            ]
+        ]);
     }
 
     public function preview_onBan($recordId = null)
     {
+        $data = $this->bannedFormWidget->getSaveData();
         $model = $this->formFindModelObject($recordId);
-        $model->ban();
+        $model->ban($data, $this->bannedFormWidget->getSessionKey());
 
-        Flash::success("Пользователь успешно заблокирован");
+        Flash::success("Пользователь успешно обновлен");
 
-        if ($redirect = $this->makeRedirect('update-close', $model)) {
+        if ($redirect = $this->makeRedirect('preview', $model)) {
             return $redirect;
         }
     }
 
-    public function preview_onUnBan($recordId = null)
+    protected function createFormBanned()
     {
-        $model = $this->formFindModelObject($recordId);
-        $model->unban();
-
-        Flash::success("Пользователь успешно заблокирован");
-
-        if ($redirect = $this->makeRedirect('update-close', $model)) {
-            return $redirect;
+        if ($this->bannedFormWidget) {
+            return $this->bannedFormWidget;
         }
-    }
 
+        if (!$this->params || !$this->params[0]) {
+            return null;
+        }
+
+        if (!$model = \KEERill\Users\Models\User::find($this->params[0])) {
+            return null;
+        }
+
+        $config = $this->makeConfig('$/keerill/users/models/user/fields_banned.yaml');
+        $config->model = $model;
+        $config->context = 'create';
+
+        $config->alias = 'banForm';
+        $config->arrayName = 'Ban';
+
+        $widget = $this->makeWidget('Backend\Widgets\Form', $config);
+        $widget->bindToController();
+
+        return $this->bannedFormWidget = $widget;
+    }
 }

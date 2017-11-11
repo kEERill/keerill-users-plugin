@@ -1,0 +1,14 @@
+<div>
+
+    {% if activation['status'] == 'success' %}
+        <h3>Подтверждение электронной почты прошло успешно!</h3>
+        <p>
+            {{ activation['message'] }}
+        </p>
+    {% else %}
+        <h3>Упсс, произошла ошибка</h3>
+        <p>
+            {{ activation['message'] }}
+        </p>
+    {% endif%}
+</div>

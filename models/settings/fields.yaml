@@ -1,16 +1,45 @@
 # ===================================
 #  Form Field Definitions
 # ===================================
+fields:
 
 tabs:
     fields:
+        use_logs:
+            span: full
+            label: Сохранять все возможные действия пользователя
+            comment: Если опция включена, то все действия совершенные пользователем будут храниться в базе данных
+            type: switch
+            tab: Система
+
+        use_access_logs:
+            span: left
+            label: Сохранять все попытки аутентификации пользователей
+            comment: Если опция включено, то после каждой попытки аутентифицироваться в базу данных будет добавлятся запись
+            type: switch
+            tab: Система
+
+        del_oldAccessLogs_days:
+            span: right
+            label: Количество дней для удаления старых логов доступа
+            comment: Количество дней, через которые система будет считать их старыми и удалять из базы. Введите 0, чтобы отключить функцию
+            tab: Система
+
+        allow_groups:
+            span: left
+            label: Запрет к авторизации
+            commentAbove: Группы, не имеющие возможность авторизироватся на сайте
+            type: checkboxlist
+            tab: Пользователь
+            options: getGroups
+
         # Throttle Sign In
         use_throttle:
-            span: left
+            span: right
             label: Отслеживание неудачных попыток авторизации
             comment: При множественных неудачных попытках авторизации пользователь будет заморожен.
             type: switch
-            tab: Авторизация
+            tab: Пользователь
 
         # Prevent concurrent sessions
         block_persistence:
@@ -18,23 +47,21 @@ tabs:
             label: Запретить одновременные сеансы
             comment: Когда активированные пользователи не могут войти на несколько устройств одновременно.
             type: switch
-            tab: Авторизация
+            tab: Пользователь
 
-        # Require Activation
-        allow_registration:
-            span: left
-            label: Разрешить регистрацию
-            comment: Если эта опция выключена, только администраторы смогут регистрировать пользователей.
-            type: switch
-            tab: Регистрация
+        section_activation:
+            label: Активация
+            comment: Настройка активации новых пользователей
+            type: section
+            tab: Пользователь
 
         # Require Activation
         require_activation:
-            span: left
+            span: full
             label: Обязательная активация аккаунта
             comment: Пользователи должны иметь активированный аккаунт для входа.
             type: switch
-            tab: Активация
+            tab: Пользователь
 
         # Activation Mode
         activate_mode:
@@ -42,21 +69,27 @@ tabs:
             commentAbove: Активация пользователя.
             label: Активация
             type: radio
-            tab: Активация
+            tab: Пользователь
 
-        # Hint
-        template_hint:
-            type: hint
-            path: $/keerill/users/models/settings/_template_hint.htm
-            tab: Оповещение
+        del_noActUsers_days:
+            span: right
+            label: Количество дней для удаления
+            comment: Количество дней для активации пользователя, иначе пользователь будет удален. Введите 0, чтобы отключить удаление
+            tab: Пользователь
 
-        # Welcome Template
-        welcome_template:
-            label: Шаблон приветствия
-            comment: Шаблон сообщения, отправляемого после активации.
-            type: dropdown
-            default: rainlab.user::mail.activate
-            tab: Оповещение
+        section_registration:
+            label: Регистрация
+            comment: Настройка регистрации новых пользователей
+            type: section
+            tab: Пользователь
+
+        # Require Activation
+        allow_registration:
+            span: left
+            label: Разрешить регистрацию
+            comment: Если эта опция выключена, только администраторы смогут регистрировать пользователей.
+            type: switch
+            tab: Пользователь
 
         group_banned:
             label: Группа заблокированного пользователя

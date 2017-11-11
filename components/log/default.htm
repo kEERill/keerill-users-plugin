@@ -1,0 +1,22 @@
+<table>
+    <thead>
+        <tr>
+            <th>Пользователь</th>
+            <th>IP адрес</th>
+            <th>Сообщение</th>
+            <th>Дата</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if user_logs %}
+            {% for log in user_logs %}
+                <tr>
+                    <td>{{ log.user.name }}</td>
+                    <td>{{ log.ip_address }}</td>
+                    <td>{{ log.message }}</td>
+                    <td>{{ log.created_at|date }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>

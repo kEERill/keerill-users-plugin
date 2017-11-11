@@ -1,0 +1,17 @@
+{% if activate %}
+    {% partial __SELF__ ~'::activation.htm' %}
+{% else %}
+    {% if canRegister %}
+        {% if not user %}
+            {% partial __SELF__ ~'::register.htm' %}
+        {% else %}
+            {% if not user.is_activated %}
+                {% partial __SELF__ ~ '::activation_check.htm' %}
+            {% else %}
+                {% partial __SELF__ ~ '::cannot_register_user.htm' %}
+            {% endif %}
+        {% endif %}
+    {% else %}
+        {% partial __SELF__ ~ '::cannot_register.htm' %}
+    {% endif %}
+{% endif %}

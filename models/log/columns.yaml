@@ -1,0 +1,29 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+
+    user_id:
+        label: Пользователь
+        relation: user
+        select: name
+        searchable: true
+
+    ip_address:
+        label: IP адрес
+        searchable: true
+    
+    message:
+        label: Сообщение
+    
+    code:
+        label: Уникальный номер
+        searchable: true
+
+    created_at:
+        label: Дата
+        type: datetime

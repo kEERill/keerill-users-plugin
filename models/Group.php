@@ -22,6 +22,11 @@ class Group extends Model
         'code' => 'required|regex:/^[a-zA-Z0-9_\-]+$/|unique:oc_users_groups',
     ];
 
+    public $attributeNames = [
+        'name' => 'Название группы',
+        'code' => 'Код группы'
+    ];
+
     /**
      * @var array Fillable fields
      */
@@ -34,7 +39,12 @@ class Group extends Model
      * @var array Relations
      */
     public $hasMany  = [
-        'users'       => ['KEERill\Users\Models\User', 'table' => 'oc_users']
+        'users'       => [
+            'KEERill\Users\Models\User', 
+            'table' => 'oc_users'
+        ]
     ];
+
+    public $jsonable = ['permissions'];
 
 }

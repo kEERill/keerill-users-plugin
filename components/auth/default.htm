@@ -1,0 +1,5 @@
+{% if user %}
+    {% partial __SELF__ ~ '::cannot_auth' %}
+{% else %}
+    {% partial __SELF__ ~ '::signin' %}
+{% endif %}

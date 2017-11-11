@@ -5,6 +5,30 @@
  - Create User Groups
  - create_groups_table.php
  - Create User Permissions
- - create_permissions_table.php
  - Create Throttles Table
  - create_throttles_table.php
+1.1.0:
+ - Release User Plugin
+ - Add new Table access Logs
+ - create_access_logs_table.php
+1.1.2:
+ - Create logs user activity
+ - create_user_logs_table.php
+1.2.0:
+ - Release new version
+ - New AuthManager
+ - Add permissions users
+ - New Bans and add banned time, banned reason
+1.2.1:
+ - Create IP Bans
+ - create_ip_table.php
+1.2.2:
+ - Seed tables defaults groups
+ - seed_groups.php
+1.2.5:
+ - Add data column in user logs table
+ - update_logs_table.php
+1.2.6:
+ - Remove permissions table, function registerUserPermissions add new permission user plugin
+1.2.7
+ - Add validate post datas in save settings
