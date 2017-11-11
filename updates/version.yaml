@@ -30,5 +30,5 @@
  - update_logs_table.php
 1.2.6:
  - Remove permissions table, function registerUserPermissions add new permission user plugin
-1.2.7
+1.2.7:
  - Add validate post datas in save settings
