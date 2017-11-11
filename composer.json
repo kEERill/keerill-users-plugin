@@ -4,7 +4,6 @@
     "description": "Users manager",
     "keywords": ["october", "cms", "users", "plugin"],
     "license": "MIT",
-
     "authors": [
         {
             "name": "Kirill Popkov",

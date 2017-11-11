@@ -1,0 +1,27 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+logs:
+    label: Действие
+    view:
+        list: $/keerill/users/models/log/columns.yaml
+        recordsPerPage: 10
+        showCheckboxes: false
+        toolbarButtons: false
+
+accesslogs:
+    label: Автаризация
+    view:
+        list: $/keerill/users/models/accesslog/columns.yaml
+        recordsPerPage: 10
+        showCheckboxes: false
+        toolbarButtons: false
+
+revision_history:
+    label: История изменений полей
+    view:
+        list: $/keerill/users/models/user/revision.yaml
+        recordsPerPage: 10
+        showCheckboxes: false
+        toolbarButtons: false

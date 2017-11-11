@@ -1,0 +1,27 @@
+<form
+    data-request="{{ __SELF__ }}::onResetPassword"
+    data-request-update="'{{ __SELF__ }}::complete': '#partialUserResetForm'"
+    data-request-flash>
+
+    <label for="resetCode">Activation Code</label>
+    <input 
+        name="code" 
+        type="text"
+        id="resetCode" 
+        placeholder="Enter the activation code" 
+        value="{{ __SELF__.code }}" />
+
+    <label for="resetPassword">New Password</label>
+    <input 
+        name="password" 
+        type="password"
+        id="resetPassword" 
+        placeholder="Enter a new password" />
+    <input
+            name="password_confirmation"
+            type="password"
+            id="resetConfirmPassword"
+            placeholder="Enter a new password" />
+
+    <button type="submit">Reset password</button>
+</form>

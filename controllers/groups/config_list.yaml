@@ -9,7 +9,7 @@ list: $/keerill/users/models/group/columns.yaml
 modelClass: KEERill\Users\Models\Group
 
 # List Title
-title: Manage Groups
+title: Управление группами
 
 # Link URL for each record
 recordUrl: keerill/users/groups/update/:id

@@ -1,18 +1,19 @@
 <?php namespace KEERill\Users\Models;
 
-use Auth;
+use Event;
 use Request;
+use AuthManager;
+use ApplicationException;
+use KEERill\Users\Models\Log;
 use October\Rain\Database\Model;
 use KEERill\Users\Models\Settings as UserSettings;
 
-/**
- * User Model
- */
-class User extends Model
+Class User extends Model 
 {
     use \October\Rain\Database\Traits\Hashable;
     use \October\Rain\Database\Traits\Purgeable;
     use \October\Rain\Database\Traits\Validation;
+    use \October\Rain\Database\Traits\Revisionable;
 
     /**
      * @var string The database table used by the model.
@@ -20,66 +21,15 @@ class User extends Model
     public $table = 'oc_users';
 
     /**
-     *Validation rules
+     * Validation rules
      */
     public $rules = [
         'email'    => 'required|between:6,255|email|unique:oc_users',
         'group' => 'required',
-        'name' => 'required|between:6,255|unique:oc_users',
+        'name' => 'required|between:4,50|unique:oc_users',
         'password' => 'required:create|between:8,255|confirmed',
         'password_confirmation' => 'required_with:password|between:8,255'
     ];
-
-    /**
-     * @var array Fillable fields
-     */
-    protected $fillable = [        
-        'name',
-        'email',
-        'ip_address',
-        'password',
-        'password_confirmation'
-    ];
-
-    /**
-     * @var array Relations
-     */
-    public $belongsTo = [
-        'group' => ['KEERill\Users\Models\Group', 'table' => 'oc_users_groups']
-    ];
-
-    public $belongsToMany = [];
-
-    public $attachOne = [
-        'avatar' => ['System\Models\File']
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['activated_at', 'last_seen', 'last_activity', 'balance_paid_at'];
-
-    /**
-     * @var array The attributes that should be hidden for arrays.
-     */
-    protected $hidden = [ 'password', 'reset_password_code', 'activation_code', 'persist_code'];
-
-    /**
-     * @var array The attributes that aren't mass assignable.
-     */
-    protected $guarded = ['reset_password_code', 'activation_code', 'persist_code'];
-
-    /**
-     * @var array List of attribute names which should be hashed using the Bcrypt hashing algorithm.
-     */
-    protected $hashable = ['persist_code'];
-
-    /**
-     * @var array List of attribute names which should not be saved to the database.
-     */
-    protected $purgeable = ['password_confirmation'];
 
     /**
      * @var array The array of custom attribute names.
@@ -88,7 +38,8 @@ class User extends Model
         'name' => 'Имя пользователя',
         'group' => 'Группа',
         'email' => 'Почта пользователя',
-        'password' => 'Пароль'
+        'password' => 'Пароль',
+        'password_confirmation' => 'Повтор пароля'
     ];
 
     /**
@@ -97,53 +48,105 @@ class User extends Model
     public $customMessages = [];
 
     /**
+     * @var array Relations
+     */
+    public $belongsTo = [
+        'group' => ['KEERill\Users\Models\Group', 'table' => 'oc_users_groups']
+    ];
+
+    public $hasMany = [
+        'accesslogs' => [
+            'KEERill\Users\Models\AccessLog', 
+            'delete' => true
+        ],
+        'logs'     => [
+            'KEERill\Users\Models\Log', 
+            'delete' => true
+        ]
+    ];
+
+    public $attachOne = [
+        'avatar' => ['System\Models\File']
+    ];
+
+    public $morphMany = [
+        'revision_history' => [
+            'System\Models\Revision', 
+            'name' => 'revisionable',
+            'delete' => true
+        ]
+    ];
+
+    /**
+     * @var array Settings Field
+     */
+    public $settingsFields = [
+        'password',
+        'password_confirmation'
+    ];
+    /**
+     * @var array Settings Rules
+     */
+    public $settingsRules = [
+        'password' => 'between:8,255|confirmed',
+        'password_confirmation' => 'required_with:password|between:8,255'
+    ];
+
+    /**
+     * @var int Maximum number of revision records to keep.
+     */
+    public $revisionableLimit = 500;
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['activated_at', 'last_seen', 'last_activity', 'is_banned_at'];
+
+    /**
+     * @var array The attributes that should be hidden for arrays.
+     */
+    protected $hidden = ['password', 'reset_password_code', 'activation_code', 'persist_code', 'balance'];
+
+    /**
+     * @var array Fillable fields
+     */
+    protected $fillable = ['name', 'email', 'ip_address', 'is_banned', 'is_banned_reason', 'password', 'password_confirmation'];
+
+    /**
+     * @var array The attributes that aren't mass assignable.
+     */
+    protected $guarded = ['reset_password_code', 'activation_code', 'persist_code', 'balance'];
+
+    /**
+     * @var array List of attribute names which should be hashed using the Bcrypt hashing algorithm.
+     */
+    protected $hashable = ['password', 'persist_code'];
+
+    /**
+     * @var array List of attribute names which should not be saved to the database.
+     */
+    protected $purgeable = ['password_confirmation'];
+
+    /**
      * @var array List of attribute names which are json encoded and decoded from the database.
      */
     protected $jsonable = ['permissions'];
 
     /**
-     * Allowed permissions values.
-     *
-     * Possible options:
-     *   -1 => Deny (adds to array, but denies regardless of user's group).
-     *    0 => Remove.
-     *    1 => Add.
-     *
-     * @var array
+     * @var array $revisionable
      */
-    protected $allowedPermissionsValues = [-1, 0, 1];
-
-    /**
-     * @var string The login attribute.
-     */
-    public static $loginAttribute = 'name';
-
-    /**
-     * @var array The user groups.
-     */
-    protected $userGroups;
-
-    /**
-     * @var array The user merged permissions.
-     */
-    protected $mergedPermissions;
-
-    /**
-     * @return string Returns the name for the user's login.
-     */
-    public function getLoginName()
-    {
-        return static::$loginAttribute;
-    }
+    protected $revisionable = ['name', 'email', 'group', 'balance'];
 
     /**
      * @return mixed Returns the user's login.
      */
     public function getLogin()
     {
-        return $this->{$this->getLoginName()};
+        return $this->name;
     }
-
+    
     /**
      * Get the password for the user.
      * @return string
@@ -189,19 +192,6 @@ class User extends Model
     {
         return 'persist_code';
     }
-    
-    public function beforeLogin()
-    {
-
-    }
-
-    public function afterLogin()
-    {
-        $this->last_seen = $this->freshTimestamp();
-        $this->ip_address = Request::ip();
-
-        $this->forceSave();
-    }
 
     /**
      * Gets a code for when the user is persisted to a cookie or session which identifies the user.
@@ -220,7 +210,84 @@ class User extends Model
     }
 
     /**
+     * Получение полей, которые можно изменить
+     * @return array Массив полей
+     */
+    public function getSettingsFields()
+    {
+        return $this->settingsFields;
+    }
+
+    /**
+     * Получение правил заполнения полей настроек пользователей
+     * @return array Массив правил
+     */
+    public function getSettingsRules()
+    {
+        return $this->settingsRules;
+    }
+
+    /**
+     * Проверка поля на запись изменений
+     * @param string Название поля
+     * @return bool
+     */
+    public function isRevisionableField($field) 
+    {
+        return in_array($field, $this->revisionable);
+    }
+
+    /**
+     * Добавление новых полей для контроля изменения
+     * 
+     * @param array Название полей
+     * @return void
+     */
+    public function addRevisionableFields($fields = [])
+    {
+        if (!is_array($fields)) {
+            $fields = [$fields];
+        }
+
+        foreach ($fields as $key => $field) {
+            if (!$this->isRevisionableField($field)) {
+                $this->revisionable[] = $field;
+            }
+        }
+    }
+
+    /**
+     * Добавление нового поля для контроля изменения данного поля
+     * 
+     * @param string Название поля
+     * @return void
+     */
+    public function addRevisionableField($field)
+    {
+        if (!$this->isRevisionableField($field)) {
+            $this->revisionable[] = $field;
+        }
+    }
+
+    /*
+     * The 'beforeLogin' event
+     */
+    public function beforeLogin() {}
+        
+    /*
+     * The 'afterLogin' event
+     */
+    public function afterLogin()
+    {
+        $this->last_seen = $this->freshTimestamp();
+        $this->ip_address = Request::ip();
+
+        $this->forceSave();
+    }
+
+    /**
      * Checks the given persist code.
+     * 
      * @param string $persistCode
      * @return bool
      */
@@ -239,6 +306,7 @@ class User extends Model
 
     /**
      * Get mutator for giving the activated property.
+     * 
      * @param mixed $activated
      * @return bool
      */
@@ -249,6 +317,7 @@ class User extends Model
 
     /**
      * Get an activation code for the given user.
+     * 
      * @return string
      */
     public function getActivationCode()
@@ -262,13 +331,14 @@ class User extends Model
 
     /**
      * Attempts to activate the given user by checking the activate code. If the user is activated already, an Exception is thrown.
+     * 
      * @param string $activationCode
      * @return bool
      */
     public function attemptActivation($activationCode)
     {
         if ($this->is_activated)
-            throw new Exception('User is already active!');
+            return false;
 
         if ($activationCode == $this->activation_code) {
             $this->activation_code = null;
@@ -276,11 +346,21 @@ class User extends Model
             $this->activated_at = $this->freshTimestamp();
             $this->group_id = UserSettings::get('group_activated', 3);
 
+            Event::fire('keerill.users.activation', [$this]);
+
             $this->forceSave();
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * Events
+     */
+    public function beforeCreate()
+    {
+        $this->ip_address = \Request::ip();
     }
 
     // 
@@ -299,31 +379,8 @@ class User extends Model
     //
 
     /**
-     * Hashing password and set new password salt
-     * @return void
-     */
-    public function makeHashPassword($value, $salt = false)
-    {
-        if($salt) {
-            $this->password_salt = $this->getRandomSalt();
-        }
-
-        return md5(md5($this->password_salt).md5($value));
-    }
-
-    /**
-     * Checks the password passed matches the user's password.
-     * @param string $password
-     * @return bool
-     */
-    public function checkPassword($password)
-    {
-        $password = md5(md5($this->password_salt).md5($password));
-        return ($password == $this->password);
-    }
-
-    /**
      * Get a reset password code for the given user.
+     * 
      * @return string
      */
     public function getResetPasswordCode()
@@ -335,16 +392,18 @@ class User extends Model
 
     /**
      * Checks if the provided user reset password code is valid without actually resetting the password.
+     * 
      * @param string $resetCode
      * @return bool
      */
     public function checkResetPasswordCode($resetCode)
     {
-        return ($this->reset_password_code == $resetCode);
+        return $this->reset_password_code && ($this->reset_password_code == $resetCode);
     }
 
     /**
      * Attempts to reset a user's password by matching the reset code generated with the user's.
+     * 
      * @param string $resetCode
      * @param string $newPassword
      * @return bool
@@ -354,6 +413,9 @@ class User extends Model
         if ($this->checkResetPasswordCode($resetCode)) {
             $this->password = $newPassword;
             $this->clearResetPassword();
+
+            Event::fire('keerill.users.reset', [$this]);
+
             return $this->forceSave();
         }
 
@@ -362,6 +424,7 @@ class User extends Model
 
     /**
      * Wipes out the data associated with resetting a password.
+     * 
      * @return void
      */
     public function clearResetPassword()
@@ -394,6 +457,7 @@ class User extends Model
 
     /**
      * Generate a random string
+     * 
      * @return string
      */
     public function getRandomString($length = 42)
@@ -416,59 +480,53 @@ class User extends Model
         return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
     }
 
-    /**
-     * Generate a random password salt
-     * @return string
-     */
-    public function getRandomSalt()
-    {
-        $pool = "#-+()012.34_56#^789abc+()defg\hijk~lmn_opqr{}=stuv.wxyzA.BC#^DE[FGH_IJKLMN#^OPQR\STUV]W~XYZ+()";
-
-        $string	= "";
-		$len	= strlen($pool) - 1;  
-
-		while (strlen($string) < 5){
-			$string .= $pool[mt_rand(0,$len)];  
-		}
-
-        return $string;
-    }
-
     //
     // Manage ban user
     // 
 
     /**
+     * Проверка, заблокирован ли пользователь
+     * 
+     * @return boolean
+     */
+    public function hasBanned()
+    {
+        return $this->group_id == UserSettings::get('group_banned', 4);
+    }
+
+    /**
      * Ban this user, preventing them from signing in.
+     * 
      * @return void
      */
-    public function ban()
+    public function ban(array $data, $sessionKey = null)
     {
-        Auth::findThrottleByUserId($this->id)->ban();
+        if (!$data) {
+            return false;
+        }
 
-        $this->group_id = UserSettings::get('group_banned', 5);
-        $this->forceSave();
-    }
+        if (array_get($data, 'is_banned')) {
 
-    /**
-     * Remove the ban on this user.
-     * @return void
-     */
-    public function unban()
-    {
-        Auth::findThrottleByUserId($this->id)->unban();
+            $this->group_id = UserSettings::get('group_banned', 4);
 
-        $this->group_id =  UserSettings::get(($this->is_activated) ? 'group_activated' : 'group_no_activated', 1);
-        $this->forceSave();
-    }
+            /**
+             * Добавляем запись о блокировке пользователя
+             */
+            Log::add($this, sprintf('Пользователь был заблокирован по причине: %s', array_get($data, 'is_banned_reason')), 'user_ban');
+        } else {
+            $this->group_id = UserSettings::get('group_activated', 3);
 
-    /**
-     * Check if the user is banned.
-     * @return bool
-     */
-    public function isBanned()
-    {
-        $throttle = Auth::createThrottleModel()->where('user_id', $this->id)->first();
-        return $throttle ? $throttle->is_banned : false;
+            /**
+             * Добавляем запись о разблокировке пользователя
+             */
+            Log::add($this, sprintf('Пользователь был разблокирован  по причине: %s', array_get($data, 'is_banned_reason')), 'user_ban');
+        }
+
+        Event::fire('keerill.users.ban', [$this, $data]);
+
+        $this->fill($data);
+        $this->is_banned_at = $this->freshTimestamp();
+
+        $this->save(null, $sessionKey);
     }
 }

@@ -1,4 +1,8 @@
 <div class="scoreboard-item title-value">
+    <h4>ID</h4>
+        <p><?= e($formModel->id) ?></p>
+</div>
+<div class="scoreboard-item title-value">
     <h4>Пользователь</h4>
         <p><?= e($formModel->name) ?></p>
     <p class="description">
@@ -20,6 +24,13 @@
         <?php endif ?>
     <p class="description">
         Статус: <?= $formModel->is_activated ? e('Активированный') : e('Ожидает активации') ?>
+    </p>
+</div>
+
+<div class="scoreboard-item title-value">
+    <h4>IP адрес</h4>
+    <p>
+        <?= $formModel->ip_address ?>
     </p>
 </div>
 

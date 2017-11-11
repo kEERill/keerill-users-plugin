@@ -1,10 +1,18 @@
 <?php namespace KEERill\Users;
 
 use App;
+use Event;
 use Backend;
+use AuthManager;
+use Carbon\Carbon;
 use System\Classes\PluginBase;
 use KEERill\Users\Models\User;
+use KEERill\Users\Models\Group;
+use KEERill\Users\Models\AccessLog;
+use System\Classes\SettingsManager;
 use Illuminate\Foundation\AliasLoader;
+use KEERill\Users\Classes\UserEventHandler;
+use KEERill\Users\Models\Settings as UserSettings;
 
 
 /**
@@ -12,6 +20,12 @@ use Illuminate\Foundation\AliasLoader;
  */
 class Plugin extends PluginBase
 {
+
+    /**
+     * @var Components Loaded
+     */
+    private $components;
+    
     /**
      * Returns information about this plugin.
      *
@@ -35,31 +49,13 @@ class Plugin extends PluginBase
     public function register()
     {
         $alias = AliasLoader::getInstance();
-        $alias->alias('Auth', 'KEERill\Users\Facades\Auth');
+        $alias->alias('AuthManager', 'KEERill\Users\Facades\Auth');
 
         App::singleton('user.auth', function() {
             return \KEERill\Users\Classes\AuthManager::instance();
         });
-    }
 
-    /**
-     * Boot method, called right before the request route.
-     *
-     * @return array
-     */
-    public function boot()
-    {
-        User::extend(function($model) {
-            $model->bindEvent('model.beforeSetAttribute', function($key, $value) use ($model) {
-                if ($key == 'password' && !empty($value)) {
-                    return $model->makeHashPassword($value, true);
-                }
-
-                if($key == 'password_confirmation' && !empty($value)) {
-                    return $model->makeHashPassword($value);
-                }
-            });
-        });
+        \Event::subscribe(new UserEventHandler);
     }
 
     /**
@@ -69,11 +65,29 @@ class Plugin extends PluginBase
      */
     public function registerComponents()
     {
-        return [
-            'KEERill\Users\Components\AuthComponent' => 'authComponent',
-            'KEERill\Users\Components\RegisterComponent' => 'registerComponent',
-            'KEERill\Users\Components\SessionComponent' => 'sessionComponent'
+        $this->components = [
+            'KEERill\Users\Components\Auth' => 'user_auth',
+            'KEERill\Users\Components\Register' => 'user_register',
+            'KEERill\Users\Components\Session' => 'user_session',
+            'KEERill\Users\Components\Settings' => 'user_settings',
+            'KEERill\Users\Components\Reset' => 'user_reset',
+            'KEERill\Users\Components\Log' => 'user_log',
+            'KEERill\Users\Components\Activity' => 'user_activity'
         ];
+
+        Event::fire('keerill.users.extendsComponents', [$this]);
+
+        return $this->components;
+    }
+
+    /**
+     * Добавление нового компонента
+     * @param array ['Namespace' => 'name']
+     * @return array Components
+     */
+    public function addComponent($components)
+    {
+        return $this->components = array_replace($this->components, $components);
     }
 
     /**
@@ -83,13 +97,40 @@ class Plugin extends PluginBase
      */
     public function registerPermissions()
     {
-        return []; // Remove this line to activate
-
         return [
-            'october.users.some_permission' => [
-                'tab' => 'Users',
-                'label' => 'Some permission'
+            'keerill.users.access_users' => [
+                'tab' => 'Пользователи',
+                'label' => 'Управление пользователями'
             ],
+            'keerill.users.access_groups' => [
+                'tab' => 'Пользователи',
+                'label' => 'Управление группами пользователей'
+            ],
+            'keerill.users.access_logs' => [
+                'tab' => 'Пользователи',
+                'label' => 'Доступ к просмотру логов пользователей'
+            ]
+        ];
+    }
+
+    /**
+     * Registers any users permissions used by this plugin.
+     *
+     * @return array
+     */
+    public function registerUsersPermissions()
+    {
+        return [
+            'keerill.users.view' => [
+                'tab' => 'Пользователи',
+                'label' => 'Доступ к просмотру страниц сайта',
+                'order' => '1'
+            ],
+            'keerill.users.settings' => [
+                'tab' => 'Пользователи',
+                'label' => 'Возможность изменять настройки пользователя',
+                'order' => '2'
+            ]
         ];
     }
 
@@ -100,39 +141,38 @@ class Plugin extends PluginBase
      */
     public function registerNavigation()
     {
-
         return [
             'users' => [
                 'label'       => 'Пользователи',
                 'url'         => Backend::url('keerill/users/users'),
                 'icon'        => 'icon-user',
-                'permissions' => ['october.users.*'],
-                'order'       => 500,
+                'permissions' => ['keerill.users.*'],
+                'order'       => 234,
                 'sideMenu' => [
-
                     'users' => [
-                        'label'       => 'Управление пользователями',
+                        'label'       => 'Список пользователей',
                         'icon'        => 'icon-user',
-                        'url'         => Backend::url('keerill/users/users')
+                        'url'         => Backend::url('keerill/users/users'),
+                        'permissions' => ['keerill.users.access_users']
                     ],
-
                     'groups' => [
-                        'label'       => 'Управление группами',
+                        'label'       => 'Список групп',
                         'icon'        => 'icon-users',
-                        'url'         => Backend::url('keerill/users/groups')
-                    ],
-                    'permissions' => [
-                        'label'       => 'Управление правами',
-                        'icon'        => 'icon-users',
-                        'url'         => Backend::url('keerill/users/permissions')
+                        'url'         => Backend::url('keerill/users/groups'),
+                        'permissions' => ['keerill.users.access_groups']
                     ]
                 ]   
-            ],
+            ]
         ];
     }
 
     public function registerSettings()
     {
+
+        Event::listen('system.settings.extendItems', function ($manager) {
+            \KEERill\Users\Models\Settings::filterSettingItems($manager);
+        });
+
         return [
             'users' => [
                 'label'       => 'Настройка пользователей',
@@ -141,14 +181,70 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-users',
                 'class'       => 'KEERill\Users\Models\Settings',
                 'order'       => 500
+            ],
+            'accesslogs' => [
+                'label'       => 'Авторизация пользователей',
+                'description' => 'Просмотр лог авторизации пользователей',
+                'category'    => SettingsManager::CATEGORY_LOGS,
+                'url'         => Backend::url('keerill/users/accesslogs'),
+                'icon'        => 'icon-users',
+                'permissions' => ['keerill.users.access_logs']
+            ],
+            'logs' => [
+                'label'       => 'Журнал пользователей',
+                'description' => 'Просмотр журнала с активиными действиями пользователей',
+                'category'    => SettingsManager::CATEGORY_LOGS,
+                'url'         => Backend::url('keerill/users/logs'),
+                'icon'        => 'icon-users',
+                'permissions' => ['keerill.users.access_logs']
             ]
         ];
+
     }
 
     public function registerMailTemplates()
     {
         return [
-            'october.users::mail.activate'   => 'Письмо с инструкциями для активации аккаунта новых пользователей',
+            'keerill.users::mail.activate'   => 'Письмо с инструкциями для активации аккаунта новых пользователей',
+            'keerill.users::mail.restore'   => 'Письмо с инструкциями по восстановлению пароля'
          ];
+    }
+
+    public function registerMarkupTags()
+    {
+        return [
+            'functions' => [
+                'hasAccess' => function($permission) { return AuthManager::hasAccess($permission); },
+            ]
+        ];
+    }
+
+    public function registerSchedule($schedule)
+    {
+        $schedule->call(function () {
+            if (!$delDays = intval(UserSettings::get('del_noActUsers_days'))) {
+                return;
+            }
+
+            $now = new Carbon;
+            $now->timezone(config('app.timezone', 'UTC'));
+
+            $users = User::where('is_activated', '0')->where('created_at', '<', $now->subDay($delDays))->get();
+           
+            foreach ($users as $user) {
+                $user->delete();
+            }
+        })->daily();
+
+        $schedule->call(function () {
+            if (!$delDays = intval(UserSettings::get('del_oldAccessLogs_days'))) {
+                return;
+            }
+
+            $now = new Carbon;
+            $now->timezone(config('app.timezone', 'UTC'));
+
+            AccessLog::where('created_at', '<', $now->subDay($delDays))->delete();
+        })->daily();
     }
 }

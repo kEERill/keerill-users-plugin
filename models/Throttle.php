@@ -1,5 +1,6 @@
 <?php namespace KEERill\Users\Models;
 
+use October\Rain\Auth\AuthException;
 use October\Rain\Auth\Models\Throttle as ThrottleBase;
 
 /**
@@ -28,5 +29,21 @@ class Throttle extends ThrottleBase
     public $belongsTo = [
         'user' => 'KEERill\Users\Models\User'
     ];
+
+    /**
+     * Check user throttle status.
+     * @return bool
+     * @throws AuthException
+     */
+    public function check()
+    {
+        if ($this->checkSuspended()) {
+            throw new AuthException(sprintf(
+                'Пользователь [%s] был заморожен. Попробуйте позже.', $this->user->getLogin()
+            ));
+        }
+
+        return true;
+    }
     
 }

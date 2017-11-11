@@ -1,0 +1,12 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+  is_banned:
+    label: Заблокировать пользователя
+    type: checkbox
+
+  is_banned_reason:
+    label: Причина блокировки
+    type: textarea

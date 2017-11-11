@@ -1,0 +1,17 @@
+columns:
+    id:
+        label: ID
+
+    field:
+        label: Поле
+
+    old_value:
+        label: Старое значение
+
+    new_value:
+        label: Новое значение
+
+    updated_at:
+        label: Дата изменения
+        type: datetime
+        format: j M Y H:i

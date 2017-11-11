@@ -10,6 +10,24 @@ use KEERill\Users\Models\Group;
  */
 class Settings extends Model
 {
+    use \October\Rain\Database\Traits\Validation;
+
+    /**
+     * @var array Validation rules
+     */
+    public $rules = [
+        'del_oldAccessLogs_days' => 'integer|min:0',
+        'del_noActUsers_days' => 'integer|min:0'
+    ];
+
+    /**
+     * @var array The array of custom attribute names.
+     */
+    public $attributeNames = [
+        'del_oldAccessLogs_days' => 'Количество дней на удаление старых логов доступа',
+        'del_noActUsers_days' => 'Количество дней на удаление неактивированных пользователей'
+    ];
+
     public $implement = ['System.Behaviors.SettingsModel'];
 
     // A unique code
@@ -28,13 +46,11 @@ class Settings extends Model
         $this->activate_mode = self::ACTIVATE_AUTO;
         $this->use_throttle = true;
         $this->block_persistence = false;
-        $this->allow_registration = true;
-        $this->welcome_template = 'rainlab.user::mail.welcome';
 
-        $this->group_banned = 1;
-        $this->group_activated = 3;
-        $this->group_guest = 2;
-        $this->group_no_activated = 1;
+        $this->allow_registration = true;
+
+        $this->use_logs = false;
+        $this->use_access_logs = false;
     }
 
     public function getActivateModeOptions()
@@ -68,11 +84,20 @@ class Settings extends Model
         return $value;
     }
 
-    public function getWelcomeTemplateOptions()
+    /**
+     * Фильтруем навигацию, убираем не нужные элементы из навигации
+     * 
+     * @param $manager
+     * @return void
+     */
+    public static function filterSettingItems($manager)
     {
-        $codes = array_keys(MailTemplate::listAllTemplates());
-        $result = ['' => '- Не отправлять уведомление -'];
-        $result += array_combine($codes, $codes);
-        return $result;
+        if (!self::get('use_logs')) {
+            $manager->removeSettingItem('KEERill.Users', 'logs');
+        }
+
+        if (!self::get('use_access_logs')) {
+            $manager->removeSettingItem('KEERill.Users', 'accesslogs');
+        }
     }
 }

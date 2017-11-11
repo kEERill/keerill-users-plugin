@@ -1,0 +1,27 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+
+    user_id:
+        label: Пользователь
+        relation: user
+        select: name
+    
+    ip_address:
+        label: IP адрес
+
+    message:
+        label: Сообщение
+
+    is_success:
+        label: Статус
+
+    created_at:
+        label: Дата входа
+        type: datetime
+    
