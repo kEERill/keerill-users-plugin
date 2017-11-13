@@ -15,7 +15,7 @@
     <h4><?= e(trans('keerill.users::lang.users.joined')) ?></h4>
     <?php if($formModel->created_at): ?>
         <p title="<?= $formModel->created_at->diffForHumans() ?>">
-            <?= $formModel->created_at->toFormattedDateString() ?>
+            <?= $formModel->created_at->format('j M Y, H:i') ?>
         </p>
     <?php endif ?>
     <p class="description">
@@ -32,5 +32,5 @@
 
 <div class="scoreboard-item title-value">
     <h4><?= e(trans('keerill.users::lang.user.last_seen')) ?></h4>
-    <p><?= $formModel->last_seen ? $formModel->last_seen->toFormattedDateString() : e(trans('keerill.users::lang.users.never')) ?></p>
+    <p><?= $formModel->last_seen ? $formModel->last_seen->format('j M Y, H:i') : e(trans('keerill.users::lang.users.never')) ?></p>
 </div>

@@ -3,13 +3,13 @@
 use AuthManager;
 use Cms\Classes\ComponentBase;
 
-class Log extends ComponentBase
+class ActivityList extends ComponentBase
 {
     public function componentDetails()
     {
         return [
-            'name'        => 'keerill.users::lang.log.component_name',
-            'description' => 'keerill.users::lang.log.component_desc'
+            'name'        => 'keerill.users::lang.activity.component_name',
+            'description' => 'keerill.users::lang.activity.component_desc'
         ];
     }
 
@@ -17,7 +17,7 @@ class Log extends ComponentBase
     {
         return [
             'limit' => [
-                'title' => 'keerill.users::lang.log.count',
+                'title' => 'keerill.users::lang.activity.count',
                 'type' => 'string',
                 'validationPattern' => '^[0-9]+$',
                 'default' => '10'
@@ -31,7 +31,7 @@ class Log extends ComponentBase
             return;
         }
 
-        $this->page['user_logs'] = $user->accesslogs()->limit($this->property('limit'))->orderBy('created_at', 'DESC')->get();
+        $this->page['user_activity'] = $user->logs()->limit($this->property('limit'))->orderBy('created_at', 'DESC')->get();
     }
 
     /**

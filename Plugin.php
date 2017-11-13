@@ -71,8 +71,8 @@ class Plugin extends PluginBase
             'KEERill\Users\Components\Session' => 'user_session',
             'KEERill\Users\Components\Settings' => 'user_settings',
             'KEERill\Users\Components\Reset' => 'user_reset',
-            'KEERill\Users\Components\Log' => 'user_log',
-            'KEERill\Users\Components\Activity' => 'user_activity'
+            'KEERill\Users\Components\LogList' => 'user_log',
+            'KEERill\Users\Components\ActivityList' => 'user_activity'
         ];
 
         Event::fire('keerill.users.extendsComponents', [$this]);
