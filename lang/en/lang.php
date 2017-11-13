@@ -7,7 +7,7 @@
         'label' => 'Users',
         'sideMenu' => 'Manage Users',
         'create_user' => 'Create a new user',
-        'create_title' => 'Creating new user',
+        'create_title' => 'Creating a new user',
         'update_title' => 'Update user',
         'preview_title' => 'Preview user',
         'confirm_delete' => 'Are you sure you want to delete this user?',
@@ -59,7 +59,7 @@
         'sideMenu' => 'Manage Groups',
         'create_group' => 'Create a new group',
         'create_title' => 'Creating a new group',
-        'update_title' => 'Editing a group'
+        'update_title' => 'Update group'
     ],
     'group' => [
         'label' => 'Group',
@@ -156,20 +156,20 @@
         'user_auth' => 'Authorization on the site: :status',
         'user_auth_success' => 'Login Successful',
         'user_send_mail' => 'A letter with further instructions sent to your mail',
-        'user_not_perm' => 'Insufficient rights to perform this operation',
-        'user_not_perm_with' => 'Insufficient rights for :operation'
+        'user_not_perm' => 'Not enough permissions to perform this operation',
+        'user_not_perm_with' => 'Not enough permisions for :operation'
     ],
     'page' => [
-        'label' => 'Setting up access',
+        'label' => 'Settings access',
         'control_permissions' => [
             'label' => 'Page restriction mode',
-            'comment' => 'The action that will be applied to the user if the user has insufficient rights to the page',
+            'comment' => 'The action that will be applied to the user if the user has not enough permissions to the page',
             'options_all' => 'Visible to everyone',
             'options_redirect' => 'Redirecting to another page'
         ],
         'permission' => [
-            'label' => 'Right to access the page',
-            'comment' => 'The user who has this right has access to the viewing page'
+            'label' => 'Permission to access the page',
+            'comment' => 'The user who has this pretmission has access to the viewing page'
         ],
         'use_user_auth' => [
             'label' => 'Redirecting an authorized user',
@@ -177,11 +177,11 @@
         ],
         'page_redirect' => [
             'label' => 'Redirect page',
-            'comment' => 'If the option "Authorized user redirection" is turned off, then all users will be redirected to this page'
+            'comment' => 'If the option "Redirecting an authorized user" is turned off, then all users will be redirected to this page'
         ],
         'page_user_redirect' => [
             'label' => 'Authorized user redirect page',
-            'comment' => 'If the option "Authorized user redirection" is enabled, only authorized users will be redirected to this page'
+            'comment' => 'If the option "Redirecting an authorized user" is enabled, only authorized users will be redirected to this page'
         ],
         'use_referer_param' => [
             'label' => 'Reverse redirection parameter',
