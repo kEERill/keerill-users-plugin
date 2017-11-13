@@ -9,22 +9,22 @@ class SeedGroups extends Seeder
     public function run()
     {
         Group::create([
-            'name' => 'Неактивированный',
+            'name' => 'Unactivated',
             'code' => 'no_active'
         ]);
 
         Group::create([
-            'name' => 'Гость',
+            'name' => 'Guest',
             'code' => 'guest'
         ]);
 
         Group::create([
-            'name' => 'Пользователь',
+            'name' => 'User',
             'code' => 'user'
         ]);
 
         Group::create([
-            'name' => 'Заблокированный',
+            'name' => 'Banned',
             'code' => 'banned'
         ]);
     }
