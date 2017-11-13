@@ -99,7 +99,7 @@
         'activate_mode_desc' => 'User Activation',
         'del_noActUsers_days' => 'Number of days to delete users',
         'del_noActUsers_days_desc' => 'Number of days to activate the user, otherwise the user will be deleted. Enter 0 to disable deletion',
-        'section_registration' => 'Check in',
+        'section_registration' => 'Registration',
         'section_registration_desc' => 'Settings new user registration',
         'allow_registration' => 'Enable registration',
         'allow_registration_desc' => 'If this option is disabled, only administrators will be able to register users',
@@ -116,7 +116,7 @@
         'activate_user' => 'Standard',
         'activate_user_desc' => 'Activating via email',
         'activate_admin' => 'Manual',
-        'activate_admin_auto' => 'Only the administrator can activate the user',
+        'activate_admin_desc' => 'Only the administrator can activate the user',
         'tabs' => [
             'system' => 'System',
             'user' => 'User',
