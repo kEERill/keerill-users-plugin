@@ -7,29 +7,29 @@ columns:
         label: ID
 
     name:
-        label: Имя
+        label: keerill.users::lang.user.name
         searchable: true
 
     email:
-        label: Почта
+        label: keerill.users::lang.user.email
         searchable: true
 
     group_id:
-        label: Группа
+        label: keerill.users::lang.user.group
         relation: group
         select: name
         searchable: true
 
     ip_address:
-        label: IP адрес
+        label: keerill.users::lang.user.ip_address
 
     last_seen:
-        label: Последний вход
+        label: keerill.users::lang.user.last_seen
         type: datetime
         format: j M Y H:i
         default: Никогда
 
     created_at:
-        label: Дата регистрации
+        label: keerill.users::lang.user.created_at
         type: datetime
         format: j M Y H:i

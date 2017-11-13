@@ -1,11 +1,9 @@
 {% if user %}
     {% partial __SELF__ ~ '::cannot_reset' %}
 {% else %}
-    <div id="partialUserResetForm">
-        {% if __SELF__.code == null %}
-            {% partial __SELF__ ~ '::restore' %}
-        {% else %}
-            {% partial __SELF__ ~ '::reset' %}
-        {% endif %}
-    </div>
+    {% if __SELF__.code == null %}
+        {% partial __SELF__ ~ '::restore' %}
+    {% else %}
+        {% partial __SELF__ ~ '::reset' %}
+    {% endif %}
 {% endif %}

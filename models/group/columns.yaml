@@ -6,7 +6,9 @@ columns:
     id:
         label: ID
         searchable: true
+
     name:
-        label: Название группы
+        label: keerill.users::lang.group.name
+
     code:
-        label: Уникальный код
+        label: keerill.users::lang.group.code

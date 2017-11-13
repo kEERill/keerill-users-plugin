@@ -18,8 +18,8 @@ class Auth extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'Аутентификация',
-            'description' => 'Форма аутентификации'
+            'name'        => 'keerill.users::lang.auth.component_name',
+            'description' => 'keerill.users::lang.auth.component_desc'
         ];
     }
 
@@ -27,8 +27,8 @@ class Auth extends ComponentBase
     {
         return [
             'redirect' => [
-                'title' => 'Перенаправление',
-                'description' => 'Перенаправление на страницу после успешной авторизации',
+                'title' => 'keerill.users::lang.auth.redirect',
+                'description' => 'keerill.users::lang.auth.redirect_desc',
                 'type' => 'dropdown',
                 'default' => ''
             ]
@@ -66,12 +66,7 @@ class Auth extends ComponentBase
                 'password' => 'required|between: 2, 255'
             ];
 
-            $messages = [
-                'name.required' => 'Поле Логин обязателен к заполнению',
-                'password.required' => 'Поле Пароль обязателен к заполнению',
-            ];
-
-            $validation = Validator::make($data, $rules, $messages);
+            $validation = Validator::make($data, $rules);
             if ($validation->fails()) {
                 throw new ValidationException($validation);
             }

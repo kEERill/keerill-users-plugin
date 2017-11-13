@@ -8,8 +8,8 @@ class Log extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'Логи авторизации',
-            'description' => 'Выводит список авторизаций пользователя'
+            'name'        => 'keerill.users::lang.log.component_name',
+            'description' => 'keerill.users::lang.log.component_desc'
         ];
     }
 
@@ -17,7 +17,7 @@ class Log extends ComponentBase
     {
         return [
             'limit' => [
-                'title' => 'Количество строк',
+                'title' => 'keerill.users::lang.log.count',
                 'type' => 'string',
                 'validationPattern' => '^[0-9]+$',
                 'default' => '10'
@@ -27,9 +27,11 @@ class Log extends ComponentBase
 
     public function onRun()
     {
-        if ($user = $this->user()) {
-            $this->page['user_logs'] = $user->accesslogs()->limit($this->property('limit'))->orderBy('created_at', 'DESC')->get();
+        if (!$user = $this->user()) {
+            return;
         }
+
+        $this->page['user_logs'] = $user->accesslogs()->limit($this->property('limit'))->orderBy('created_at', 'DESC')->get();
     }
 
     /**

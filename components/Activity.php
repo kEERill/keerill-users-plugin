@@ -8,8 +8,8 @@ class Activity extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'Логи активности',
-            'description' => 'Активные действия пользователя'
+            'name'        => 'keerill.users::lang.activity.component_name',
+            'description' => 'keerill.users::lang.activity.component_desc'
         ];
     }
 
@@ -17,7 +17,7 @@ class Activity extends ComponentBase
     {
         return [
             'limit' => [
-                'title' => 'Количество строк',
+                'title' => 'keerill.users::lang.activity.count',
                 'type' => 'string',
                 'validationPattern' => '^[0-9]+$',
                 'default' => '10'
@@ -27,9 +27,11 @@ class Activity extends ComponentBase
 
     public function onRun()
     {
-        if ($user = $this->user()) {
-            $this->page['user_activity'] = $user->logs()->limit($this->property('limit'))->orderBy('created_at', 'DESC')->get();
+        if (!$user = $this->user()) {
+            return;
         }
+
+        $this->page['user_activity'] = $user->logs()->limit($this->property('limit'))->orderBy('created_at', 'DESC')->get();
     }
 
     /**

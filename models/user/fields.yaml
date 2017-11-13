@@ -4,58 +4,56 @@
 
 fields:
 
-
 tabs:
     fields:
         name:
-            label: Имя пользователя
-            tab: Аккаунт
+            label: keerill.users::lang.user.name
+            tab: keerill.users::lang.user.tab_account
             span: auto
 
         group:
-            label: Группа
-            tab: Аккаунт
+            label: keerill.users::lang.user.group
+            tab: keerill.users::lang.user.tab_account
             span: auto
             type: relation
 
         email:
-            label: Почта
-            tab: Аккаунт
+            label: keerill.users::lang.user.email
+            comment: keerill.users::lang.user.email_desc
+            tab: keerill.users::lang.user.tab_account
             span: full
 
         password@create:
-            label: Пароль
-            comment: Введите пароль, который будет использоваться для входа
-            tab: Аккаунт
+            label: keerill.users::lang.user.password
+            comment: keerill.users::lang.user.password_desc
+            tab: keerill.users::lang.user.tab_account
             type: password
             span: left
 
         password@update:
-            label: Сброс пароля
-            comment: Введите пароль, который будет использоватся после сохранения
-            tab: Аккаунт
+            label: keerill.users::lang.user.password_update
+            comment: keerill.users::lang.user.password_update_desc
+            tab: keerill.users::lang.user.tab_account
             type: password
             span: left
 
         password_confirmation:
-            label: Подтверждение пароля
-            comment: Введите пароль еще раз для подтверждения.
-            tab: Аккаунт
+            label: keerill.users::lang.user.confirm_password
+            comment: keerill.users::lang.user.confirm_password_desc
+            tab: keerill.users::lang.user.tab_account
             type: password
             span: right
             context: [create, update]
 
-        revision_history:
-            tab: Изменения
+        revision_history@preview:
+            tab: keerill.users::lang.user.revision.label
             type: partial
             path: field_revisions
-            context: [update, preview]
 
 secondaryTabs:
     fields:
-
         avatar:
-            label: Аватар пользователя
+            label: keerill.users::lang.user.avatar
             type: fileupload
             mode: image
             imageHeight: 260

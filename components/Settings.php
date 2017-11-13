@@ -17,8 +17,8 @@ class Settings extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'Настройки',
-            'description' => 'Редактирование настроек пользователя'
+            'name'        => 'keerill.users::lang.settings.component_name',
+            'description' => 'keerill.users::lang.settings.component_desc'
         ];
     }
 
@@ -26,8 +26,8 @@ class Settings extends ComponentBase
     {
         return [
             'redirect' => [
-                'title' => 'Перенаправление',
-                'description' => 'Перенаправление на страницу после сохранения настроек',
+                'title' => 'keerill.users::lang.settings.redirect',
+                'description' => 'keerill.users::lang.settings.redirect_desc',
                 'type' => 'dropdown',
                 'default' => ''
             ]
@@ -60,11 +60,15 @@ class Settings extends ComponentBase
     {
         try {
             if (!$user = $this->user()) {
-                throw new ApplicationException('Пользователь не найден');
+                throw new ApplicationException(Lang::get('keerill.users::lang.messages.user_not_found'));
             }
 
             if (!AuthManager::hasAccess('keerill.users.settings')) {
-                throw new ApplicationException('Недостаточно прав для изменения настроек');
+                throw new ApplicationException(
+                    Lang::get('keerill.users::lang.messages.user_not_perm_with', [
+                        'operation' => Lang::get('keerill.users::lang.settings.not_perm_save')
+                    ])
+                );
             }
 
             $data = post();
@@ -89,9 +93,9 @@ class Settings extends ComponentBase
 
             $user->save();
 
-            Log::add($user, 'Изменены настройки пользователя', 'user_edit');
+            Log::add($user, Lang::get('keerill.users::lang.settings.save_settings'), 'user_edit');
 
-            Flash::success('Настройки успешно сохранены');
+            Flash::success(Lang::get('keerill.users::lang.settings.save_settings'));
 
             $redirectUrl = $this->pageUrl($this->property('redirect'));
             

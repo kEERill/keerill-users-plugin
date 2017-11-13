@@ -3,7 +3,7 @@
         <p><?= e($formModel->id) ?></p>
 </div>
 <div class="scoreboard-item title-value">
-    <h4>Пользователь</h4>
+    <h4><?= e(trans('keerill.users::lang.user.label')) ?></h4>
         <p><?= e($formModel->name) ?></p>
     <p class="description">
         <a href="mailto:<?= e($formModel->email) ?>">
@@ -12,29 +12,25 @@
     </p>
 </div>
 <div class="scoreboard-item title-value">
-    <h4>Присоединился</h4>
+    <h4><?= e(trans('keerill.users::lang.users.joined')) ?></h4>
     <?php if($formModel->created_at): ?>
         <p title="<?= $formModel->created_at->diffForHumans() ?>">
             <?= $formModel->created_at->toFormattedDateString() ?>
         </p>
-        <?php else: ?>
-            <p title="Нет данных">
-                Неизвестно
-            </p>
-        <?php endif ?>
+    <?php endif ?>
     <p class="description">
-        Статус: <?= $formModel->is_activated ? e('Активированный') : e('Ожидает активации') ?>
+        <?= e(trans('keerill.users::lang.users.status')) ?>: <?= $formModel->is_activated ? e(trans('keerill.users::lang.user.is_activated')) : e(trans('keerill.users::lang.users.is_no_activated')) ?>
     </p>
 </div>
 
 <div class="scoreboard-item title-value">
-    <h4>IP адрес</h4>
+    <h4><?= e(trans('keerill.users::lang.user.ip_address')) ?></h4>
     <p>
         <?= $formModel->ip_address ?>
     </p>
 </div>
 
 <div class="scoreboard-item title-value">
-    <h4>Последний вход</h4>
-    <p><?= $formModel->last_seen ? $formModel->last_seen->toFormattedDateString() : e('Никогда') ?></p>
+    <h4><?= e(trans('keerill.users::lang.user.last_seen')) ?></h4>
+    <p><?= $formModel->last_seen ? $formModel->last_seen->toFormattedDateString() : e(trans('keerill.users::lang.users.never')) ?></p>
 </div>

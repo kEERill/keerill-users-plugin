@@ -2,9 +2,9 @@
     <div class="callout callout-danger">
         <div class="header">
             <i class="icon-ban"></i>
-            <h3>Пользователь заблокирован</h3>
+            <h3><?= e(trans('keerill.users::lang.user.is_banned')) ?></h3>
             <p>
-                Этот пользователь заблокирован администратором по причине: <?= $formModel->is_banned_reason ?: 'ПРИЧИНА НЕ УКАЗАНА' ?>.
+                <?= e(trans('keerill.users::lang.user.banned_log', ['reason' => $formModel->getBannedReason()])) ?>
             </p>
         </div>
     </div>

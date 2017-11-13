@@ -1,6 +1,7 @@
 <?php namespace KEERill\Users\Classes;
 
 use Mail;
+use Lang;
 use Event;
 use Cookie;
 use Session;
@@ -230,7 +231,7 @@ class AuthManager
         }
 
         if (!$user = $query->first()) {
-            throw new ApplicationException('Логин или пароль, введены не верно!');
+            throw new ApplicationException(Lang::get('keerill.users::lang.messages.user_credentials_invalid'));
         }
 
         /*
@@ -241,11 +242,11 @@ class AuthManager
             if (!$user->checkHashValue($credential, $value)) {
                 // Incorrect password
                 if ($credential == 'password') {
-                    throw new ApplicationException('Логин или пароль, введены не верно!');
+                    throw new ApplicationException(Lang::get('keerill.users::lang.messages.user_credentials_invalid'));
                 }
 
                 // User not found
-                throw new ApplicationException('Логин или пароль, введены не верно!');
+                throw new ApplicationException(Lang::get('keerill.users::lang.messages.user_not_found'));
             }
         }
 
@@ -300,9 +301,9 @@ class AuthManager
          * Activation is required, user not activated
          */
         if ($this->requireActivation && !$user->is_activated) {
-            throw new ApplicationException(sprintf(
-                'Невозможно авторизоваться под "%s", потому что не подтвержден.', $user->name
-            ));
+            throw new ApplicationException(
+                Lang::get('keerill.users::lang.messages.user_no_activate', ['name' => $user->name])
+            );
         }
 
         $this->setUser($user);
@@ -353,16 +354,16 @@ class AuthManager
      * @param array $credentials The user login details
      * @param bool $remember Store a non-expire cookie for the user
      */
-    public function authenticate(array $credentials, $remember = true, $checkAuth = false, $customMessage = '')
+    public function authenticate(array $credentials, $remember = true, $login = true, $customMessage = '')
     {
             
-        $customMessage = $customMessage ?: 'Авторизация на сайте: ';
+        $customMessage = $customMessage ?: 'keerill.users::lang.messages.user_auth';
 
         /*
          * Проверка важных параметров для авторизации
          */
         if (empty($credentials['name'])) {
-            throw new ApplicationException(sprintf('The name attribute is required.'));
+            throw new ApplicationException('The name attribute is required.');
         }
 
         if (empty($credentials['password'])) {
@@ -390,7 +391,7 @@ class AuthManager
         if ($allow_groups) {
             foreach ($allow_groups as $num => $group) {
                 if ($group == $user->group_id) {
-                    throw new ApplicationException("Авторизация была ограничена администрацией сайта");
+                    throw new ApplicationException(Lang::get('keerill.users::lang.messages.user_credentials_invalid'));
                 }
             }
         }
@@ -400,7 +401,7 @@ class AuthManager
          */
         try {
             if (!$user->checkHashValue('password', array_get($credentials, 'password'))) {
-                throw new ApplicationException('Логин или пароль, введены неверно!');
+                throw new ApplicationException(Lang::get('keerill.users::lang.messages.user_credentials_invalid'));
             }
         }
         catch (ApplicationException $ex) {
@@ -408,7 +409,9 @@ class AuthManager
             /*
             * Добавляем запись о том, что авторизация не удалась
             */
-            AccessLog::add($user, $customMessage . $ex->getMessage(), false);
+            AccessLog::add($user, Lang::get($customMessage, [
+                'status' => $ex->getMessage()
+            ]), false);
 
             /*
             * Добавляем неверную попытку
@@ -427,14 +430,16 @@ class AuthManager
             $user->clearResetPassword();
         }
         
-        if (!$checkAuth) {
+        if ($login) {
             $this->login($user, $remember);
         }
 
         /*
          * Добавляем запись о том, что пользователь успешно авторизировался
          */
-        AccessLog::add($user, $customMessage . 'Успешно', true);
+        AccessLog::add($user, Lang::get($customMessage, [
+            'status' => Lang::get('keerill.users::lang.messages.user_auth_success')
+        ]), true);
 
         return $this->user = $user;
     }
@@ -459,6 +464,7 @@ class AuthManager
 
     /**
      * Регистрация прав пользователей
+     * 
      * @param string ID плагина
      * @param array 
      */

@@ -7,117 +7,118 @@ tabs:
     fields:
         use_logs:
             span: full
-            label: Сохранять все возможные действия пользователя
-            comment: Если опция включена, то все действия совершенные пользователем будут храниться в базе данных
+            label: keerill.users::lang.settings.use_logs
+            comment: keerill.users::lang.settings.use_logs_desc
             type: switch
-            tab: Система
+            tab: keerill.users::lang.settings.tabs.system
 
         use_access_logs:
             span: left
-            label: Сохранять все попытки аутентификации пользователей
-            comment: Если опция включено, то после каждой попытки аутентифицироваться в базу данных будет добавлятся запись
+            label: keerill.users::lang.settings.use_access_logs
+            comment: keerill.users::lang.settings.use_access_logs_desc
             type: switch
-            tab: Система
+            tab: keerill.users::lang.settings.tabs.system
 
         del_oldAccessLogs_days:
             span: right
-            label: Количество дней для удаления старых логов доступа
-            comment: Количество дней, через которые система будет считать их старыми и удалять из базы. Введите 0, чтобы отключить функцию
-            tab: Система
+            label: keerill.users::lang.settings.del_oldAccessLogs_days
+            comment: keerill.users::lang.settings.del_oldAccessLogs_days_desc
+            tab: keerill.users::lang.settings.tabs.system
 
         allow_groups:
             span: left
-            label: Запрет к авторизации
-            commentAbove: Группы, не имеющие возможность авторизироватся на сайте
+            label: keerill.users::lang.settings.allow_groups
+            commentAbove: keerill.users::lang.settings.allow_groups_desc
             type: checkboxlist
-            tab: Пользователь
+            tab: keerill.users::lang.settings.tabs.user
             options: getGroups
 
         # Throttle Sign In
         use_throttle:
             span: right
-            label: Отслеживание неудачных попыток авторизации
-            comment: При множественных неудачных попытках авторизации пользователь будет заморожен.
+            label: keerill.users::lang.settings.use_throttle
+            comment: keerill.users::lang.settings.use_throttle_desc
             type: switch
-            tab: Пользователь
+            tab: keerill.users::lang.settings.tabs.user
 
         # Prevent concurrent sessions
         block_persistence:
             span: right
-            label: Запретить одновременные сеансы
-            comment: Когда активированные пользователи не могут войти на несколько устройств одновременно.
+            label: keerill.users::lang.settings.block_persistence
+            comment: keerill.users::lang.settings.block_persistence_desc
             type: switch
-            tab: Пользователь
+            tab: keerill.users::lang.settings.tabs.user
 
         section_activation:
-            label: Активация
-            comment: Настройка активации новых пользователей
+            label: keerill.users::lang.settings.section_activation
+            comment: keerill.users::lang.settings.section_activation_desc
             type: section
-            tab: Пользователь
+            tab: keerill.users::lang.settings.tabs.user
 
         # Require Activation
         require_activation:
             span: full
-            label: Обязательная активация аккаунта
-            comment: Пользователи должны иметь активированный аккаунт для входа.
+            label: keerill.users::lang.settings.require_activation
+            comment: keerill.users::lang.settings.require_activation_desc
             type: switch
-            tab: Пользователь
+            tab: keerill.users::lang.settings.tabs.user
 
         # Activation Mode
         activate_mode:
             span: left
-            commentAbove: Активация пользователя.
-            label: Активация
+            label: keerill.users::lang.settings.activate_mode
+            commentAbove: keerill.users::lang.settings.activate_mode_desc
             type: radio
-            tab: Пользователь
+            tab: keerill.users::lang.settings.tabs.user
 
         del_noActUsers_days:
             span: right
-            label: Количество дней для удаления
-            comment: Количество дней для активации пользователя, иначе пользователь будет удален. Введите 0, чтобы отключить удаление
-            tab: Пользователь
+            label: keerill.users::lang.settings.del_noActUsers_days
+            comment: keerill.users::lang.settings.del_noActUsers_days_desc
+            tab: keerill.users::lang.settings.tabs.user
 
         section_registration:
-            label: Регистрация
-            comment: Настройка регистрации новых пользователей
+            label: keerill.users::lang.settings.section_registration
+            comment: keerill.users::lang.settings.section_registration_desc
             type: section
-            tab: Пользователь
+            tab: keerill.users::lang.settings.tabs.user
 
         # Require Activation
         allow_registration:
             span: left
-            label: Разрешить регистрацию
-            comment: Если эта опция выключена, только администраторы смогут регистрировать пользователей.
+            label: keerill.users::lang.settings.allow_registration
+            comment: keerill.users::lang.settings.allow_registration_desc
             type: switch
-            tab: Пользователь
+            tab: keerill.users::lang.settings.tabs.user
 
         group_banned:
-            label: Группа заблокированного пользователя
-            comment: Группа присваивается, когда пользователь заблокирован
+            label: keerill.users::lang.settings.group_banned
+            comment: keerill.users::lang.settings.group_banned_desc
             span: left
             type: dropdown
             options: getGroups
-            tab: Настройка групп
+            tab: keerill.users::lang.settings.tabs.groups
 
         group_activated:
-            label: Группа активированного пользователя
-            comment: Группа присваивается, когда пользователь активировал свой аккаунт
+            label: keerill.users::lang.settings.group_activated
+            comment: keerill.users::lang.settings.group_activated_desc
             span: right
             type: dropdown
             options: getGroups
-            tab: Настройка групп
+            tab: keerill.users::lang.settings.tabs.groups
 
         group_guest:
-            label: Группа не авторизированного пользователя
+            label: keerill.users::lang.settings.group_guest
+            comment: keerill.users::lang.settings.group_guest_desc
             span: left
             type: dropdown
             options: getGroups
-            tab: Настройка групп
+            tab: keerill.users::lang.settings.tabs.groups
 
         group_no_activated:
-            label: Группа не активированного пользователя
-            comment: Группа присваивается, когда пользователь не активировал свой аккаунт
+            label: keerill.users::lang.settings.group_no_activated
+            comment: keerill.users::lang.settings.group_no_activated_desc
             span: right
             type: dropdown
             options: getGroups
-            tab: Настройка групп
+            tab: keerill.users::lang.settings.tabs.groups

@@ -1,5 +1,6 @@
 <?php namespace KEERill\Users\Controllers;
 
+use Lang;
 use Flash;
 use Exception;
 use BackendMenu;
@@ -57,11 +58,10 @@ class Users extends Controller
         if (UserSettings::get('use_logs')) {
             $widget->addTabFields([
                 'logs' => [
-                    'tab' => 'Активность',
+                    'tab' => 'keerill.users::lang.logs.menu_label',
                     'type' => 'partial',
                     'path' => 'field_logs',
                     'context' => [
-                        'update',
                         'preview'
                     ]
                 ]
@@ -71,11 +71,10 @@ class Users extends Controller
         if (UserSettings::get('use_access_logs')) {
             $widget->addTabFields([
                 'accesslogs' => [
-                    'tab' => 'Доступ',
+                    'tab' => 'keerill.users::lang.accessLogs.menu_label',
                     'type' => 'partial',
                     'path' => 'field_accesslogs',
                     'context' => [
-                        'update',
                         'preview'
                     ]
                 ]
@@ -88,7 +87,7 @@ class Users extends Controller
         $model = $this->formFindModelObject($recordId);
         $model->attemptActivation($model->activation_code);
         
-        Flash::success('Пользователь успешно активирован');
+        Flash::success(Lang::get('keerill.users::lang.messages.User_activation_success'));
 
         if ($redirect = $this->makeRedirect('preview', $model)) {
             return $redirect;
@@ -100,9 +99,9 @@ class Users extends Controller
         return $this->makePartial('popup_form', [
             'widget' => $this->bannedFormWidget,
             'options' => [
-                'title' => 'Блокировка пользователя',
+                'title' => Lang::get('keerill.users::lang.users.block'),
                 'request' => 'onBan',
-                'form_btn' => 'Сохранить'
+                'form_btn' => Lang::get('backend::lang.form.save')
             ]
         ]);
     }
@@ -113,7 +112,9 @@ class Users extends Controller
         $model = $this->formFindModelObject($recordId);
         $model->ban($data, $this->bannedFormWidget->getSessionKey());
 
-        Flash::success("Пользователь успешно обновлен");
+        Flash::success(Lang::get('backend::lang.form.update_success', [
+            'name' => Lang::get('keerill.users::lang.user.label')
+        ]));
 
         if ($redirect = $this->makeRedirect('preview', $model)) {
             return $redirect;

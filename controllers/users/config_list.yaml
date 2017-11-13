@@ -9,7 +9,7 @@ list: $/keerill/users/models/user/columns.yaml
 modelClass: KEERill\Users\Models\User
 
 # List Title
-title: Управление пользователями
+title: keerill.users::lang.users.sideMenu
 
 # Link URL for each record
 recordUrl: keerill/users/users/preview/:id

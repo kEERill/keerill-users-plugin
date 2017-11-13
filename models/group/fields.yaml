@@ -4,10 +4,10 @@
 
 fields:
     name:
-        label: Название группы
+        label: keerill.users::lang.group.name
         span: auto
 
     code:
-        label: Уникальный код
+        label: keerill.users::lang.group.code
         preset: name
         span: auto

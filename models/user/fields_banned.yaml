@@ -4,9 +4,11 @@
 
 fields:
   is_banned:
-    label: Заблокировать пользователя
+    label: keerill.users::lang.user.is_banned
+    comment: keerill.users::lang.user.is_banned_desc
     type: checkbox
 
   is_banned_reason:
-    label: Причина блокировки
+    label: keerill.users::lang.user.is_banned_reason
+    commentAbove: keerill.users::lang.user.is_banned_reason_desc
     type: textarea

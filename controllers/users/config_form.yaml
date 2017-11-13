@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Пользователь
+name: keerill.users::lang.user.label
 
 # Model Form Field configuration
 form: $/keerill/users/models/user/fields.yaml
@@ -16,17 +16,17 @@ defaultRedirect: keerill/users/users
 
 # Create page
 create:
-    title: Создание пользователя
+    title: keerill.users::lang.users.create_title
     redirect: keerill/users/users/preview/:id
     redirectClose: keerill/users/users
 
 # Update page
 update:
-    title: Редактирования пользователя
+    title: keerill.users::lang.users.update_title
     redirect: keerill/users/users/update/:id
     redirectClose: keerill/users/users
 
 # Preview page
 preview:
-    title: Просмотр профиля пользователя
+    title: keerill.users::lang.users.preview_title
     redirect: keerill/users/users/preview/:id

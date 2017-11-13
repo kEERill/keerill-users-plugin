@@ -9,7 +9,7 @@ list: $/keerill/users/models/log/columns.yaml
 modelClass: KEERill\Users\Models\Log
 
 # List Title
-title: Логи пользователей
+title: keerill.users::lang.logs.label
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records

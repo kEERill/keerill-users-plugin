@@ -1,18 +1,19 @@
 <a
     href="<?= Backend::url('keerill/users/users') ?>"
     class="btn btn-default oc-icon-chevron-left">
-    Вернуться к списку пользователей
+    <?= e(trans('backend::lang.form.return_to_list')) ?>
 </a>
 <a
     href="<?= Backend::url('keerill/users/users/update/'.$formModel->id) ?>"
     class="btn btn-primary oc-icon-pencil">
-    Редактировать
+    <?= e(trans('keerill.users::lang.users.edit')) ?>
 </a>
 <a 
     href="javascript:;"
     class="btn btn-default"
     data-control="popup"
-    data-handler="onLoadFormBanned"
->Блокировка</a>
+    data-handler="onLoadFormBanned">
+    <?= e(trans('keerill.users::lang.users.block')) ?>
+</a>
 
 

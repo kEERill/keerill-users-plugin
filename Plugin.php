@@ -34,8 +34,8 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'Пользователи',
-            'description' => 'Управление пользователями и их правами',
+            'name'        => 'keerill.users::lang.plugin.name',
+            'description' => 'keerill.users::lang.plugin.description',
             'author'      => 'kEERill',
             'icon'        => 'icon-leaf'
         ];
@@ -99,16 +99,20 @@ class Plugin extends PluginBase
     {
         return [
             'keerill.users.access_users' => [
-                'tab' => 'Пользователи',
-                'label' => 'Управление пользователями'
+                'tab' => 'keerill.users::lang.plugin.name',
+                'label' => 'keerill.users::lang.permissions.users'
             ],
             'keerill.users.access_groups' => [
-                'tab' => 'Пользователи',
-                'label' => 'Управление группами пользователей'
+                'tab' => 'keerill.users::lang.plugin.name',
+                'label' => 'keerill.users::lang.permissions.groups'
             ],
             'keerill.users.access_logs' => [
-                'tab' => 'Пользователи',
-                'label' => 'Доступ к просмотру логов пользователей'
+                'tab' => 'keerill.users::lang.plugin.name',
+                'label' => 'keerill.users::lang.permissions.accessLogs'
+            ],
+            'keerill.users.users_logs' => [
+                'tab' => 'keerill.users::lang.plugin.name',
+                'label' => 'keerill.users::lang.permissions.usersLogs'
             ]
         ];
     }
@@ -122,13 +126,13 @@ class Plugin extends PluginBase
     {
         return [
             'keerill.users.view' => [
-                'tab' => 'Пользователи',
-                'label' => 'Доступ к просмотру страниц сайта',
+                'tab' => 'keerill.users::lang.plugin.name',
+                'label' => 'keerill.users::lang.permissions.frontend.accessSite',
                 'order' => '1'
             ],
             'keerill.users.settings' => [
-                'tab' => 'Пользователи',
-                'label' => 'Возможность изменять настройки пользователя',
+                'tab' => 'keerill.users::lang.plugin.name',
+                'label' => 'keerill.users::lang.permissions.frontend.settings',
                 'order' => '2'
             ]
         ];
@@ -143,20 +147,20 @@ class Plugin extends PluginBase
     {
         return [
             'users' => [
-                'label'       => 'Пользователи',
+                'label'       => 'keerill.users::lang.users.label',
                 'url'         => Backend::url('keerill/users/users'),
                 'icon'        => 'icon-user',
                 'permissions' => ['keerill.users.*'],
                 'order'       => 234,
                 'sideMenu' => [
                     'users' => [
-                        'label'       => 'Список пользователей',
+                        'label'       => 'keerill.users::lang.users.sideMenu',
                         'icon'        => 'icon-user',
                         'url'         => Backend::url('keerill/users/users'),
                         'permissions' => ['keerill.users.access_users']
                     ],
                     'groups' => [
-                        'label'       => 'Список групп',
+                        'label'       => 'keerill.users::lang.groups.sideMenu',
                         'icon'        => 'icon-users',
                         'url'         => Backend::url('keerill/users/groups'),
                         'permissions' => ['keerill.users.access_groups']
@@ -175,28 +179,28 @@ class Plugin extends PluginBase
 
         return [
             'users' => [
-                'label'       => 'Настройка пользователей',
-                'description' => 'Управление настройками пользователей',
-                'category'    => 'Пользователи',
+                'label'       => 'keerill.users::lang.settings.users',
+                'description' => 'keerill.users::lang.settings.users_desc',
+                'category'    => 'keerill.users::lang.plugin.name',
                 'icon'        => 'icon-users',
                 'class'       => 'KEERill\Users\Models\Settings',
                 'order'       => 500
             ],
             'accesslogs' => [
-                'label'       => 'Авторизация пользователей',
-                'description' => 'Просмотр лог авторизации пользователей',
+                'label'       => 'keerill.users::lang.settings.accessLogs',
+                'description' => 'keerill.users::lang.settings.accessLogs_desc',
                 'category'    => SettingsManager::CATEGORY_LOGS,
                 'url'         => Backend::url('keerill/users/accesslogs'),
                 'icon'        => 'icon-users',
                 'permissions' => ['keerill.users.access_logs']
             ],
             'logs' => [
-                'label'       => 'Журнал пользователей',
-                'description' => 'Просмотр журнала с активиными действиями пользователей',
+                'label'       => 'keerill.users::lang.settings.usersLogs',
+                'description' => 'keerill.users::lang.settings.usersLogs_desc',
                 'category'    => SettingsManager::CATEGORY_LOGS,
                 'url'         => Backend::url('keerill/users/logs'),
                 'icon'        => 'icon-users',
-                'permissions' => ['keerill.users.access_logs']
+                'permissions' => ['keerill.users.users_logs']
             ]
         ];
 
@@ -205,8 +209,8 @@ class Plugin extends PluginBase
     public function registerMailTemplates()
     {
         return [
-            'keerill.users::mail.activate'   => 'Письмо с инструкциями для активации аккаунта новых пользователей',
-            'keerill.users::mail.restore'   => 'Письмо с инструкциями по восстановлению пароля'
+            'keerill.users::mail.activate'   => 'keerill.users::lang.mail.activate',
+            'keerill.users::mail.restore'   => 'keerill.users::lang.mail.restore'
          ];
     }
 

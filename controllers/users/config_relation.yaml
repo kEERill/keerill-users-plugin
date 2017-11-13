@@ -3,7 +3,7 @@
 # ===================================
 
 logs:
-    label: Действие
+    label: keerill.users::lang.logs.label
     view:
         list: $/keerill/users/models/log/columns.yaml
         recordsPerPage: 10
@@ -11,7 +11,7 @@ logs:
         toolbarButtons: false
 
 accesslogs:
-    label: Автаризация
+    label: keerill.users::lang.logs.label
     view:
         list: $/keerill/users/models/accesslog/columns.yaml
         recordsPerPage: 10
@@ -19,7 +19,7 @@ accesslogs:
         toolbarButtons: false
 
 revision_history:
-    label: История изменений полей
+    label: keerill.users::lang.user.revision.label
     view:
         list: $/keerill/users/models/user/revision.yaml
         recordsPerPage: 10

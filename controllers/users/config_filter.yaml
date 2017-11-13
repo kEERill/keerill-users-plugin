@@ -6,7 +6,7 @@ scopes:
 
     groups:
         # Filter name
-        label: Группы
+        label: keerill.users::lang.group.label
         # Model Class name
         modelClass: KEERill\Users\Models\Group
         # Model attribute to display for the name
@@ -15,13 +15,13 @@ scopes:
         scope: filterByGroup
 
     created_date:
-        label: Дата регистрации
+        label: keerill.users::lang.user.created_at
         type: daterange
         conditions: created_at >= ':after' AND created_at <= ':before'
 
     activated:
         # Filter name
-        label: Активированный
+        label: keerill.users::lang.user.is_activated
         # Filter type
         type: switch
         # SQL conditions

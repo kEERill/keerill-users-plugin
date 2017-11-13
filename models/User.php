@@ -1,5 +1,6 @@
 <?php namespace KEERill\Users\Models;
 
+use Lang;
 use Event;
 use Request;
 use AuthManager;
@@ -225,6 +226,24 @@ Class User extends Model
     public function getSettingsRules()
     {
         return $this->settingsRules;
+    }
+
+    /**
+     * Получение причины блокировки пользователя
+     * @return string
+     */
+    public function getBannedReason()
+    {
+        return $this->is_banned_reason ?: Lang::get('keerill.users::lang.user.ban_no_reason');
+    }
+
+    /**
+     * Проверка, заблокирован ли пользователь
+     * @return boolean
+     */
+    public function hasBanned()
+    {
+        return $this->is_banned;
     }
 
     /**
@@ -480,20 +499,6 @@ Class User extends Model
         return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
     }
 
-    //
-    // Manage ban user
-    // 
-
-    /**
-     * Проверка, заблокирован ли пользователь
-     * 
-     * @return boolean
-     */
-    public function hasBanned()
-    {
-        return $this->group_id == UserSettings::get('group_banned', 4);
-    }
-
     /**
      * Ban this user, preventing them from signing in.
      * 
@@ -512,14 +517,19 @@ Class User extends Model
             /**
              * Добавляем запись о блокировке пользователя
              */
-            Log::add($this, sprintf('Пользователь был заблокирован по причине: %s', array_get($data, 'is_banned_reason')), 'user_ban');
+            Log::add($this, Lang::get('keerill.users::lang.user.banned_log', [
+                'reason' => array_get($data, 'is_banned_reason') ?: Lang::get('keerill.users::lang.user.ban_no_reason')
+            ]), 'user_ban');
+        
         } else {
             $this->group_id = UserSettings::get('group_activated', 3);
 
             /**
              * Добавляем запись о разблокировке пользователя
              */
-            Log::add($this, sprintf('Пользователь был разблокирован  по причине: %s', array_get($data, 'is_banned_reason')), 'user_ban');
+            Log::add($this, Lang::get('keerill.users::lang.user.unbanned_log', [
+                'reason' => array_get($data, 'is_banned_reason') ?: Lang::get('keerill.users::lang.user.ban_no_reason')
+            ]), 'user_ban');
         }
 
         Event::fire('keerill.users.ban', [$this, $data]);

@@ -3,15 +3,15 @@ columns:
         label: ID
 
     field:
-        label: Поле
+        label: keerill.users::lang.user.revision.field
 
     old_value:
-        label: Старое значение
+        label: keerill.users::lang.user.revision.old_value
 
     new_value:
-        label: Новое значение
+        label: keerill.users::lang.user.revision.new_value
 
     updated_at:
-        label: Дата изменения
+        label: keerill.users::lang.logs.created_at
         type: datetime
         format: j M Y H:i

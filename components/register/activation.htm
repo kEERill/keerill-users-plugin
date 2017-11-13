@@ -1,12 +1,11 @@
 <div>
-
     {% if activation['status'] == 'success' %}
-        <h3>Подтверждение электронной почты прошло успешно!</h3>
+        <h3>Success!</h3>
         <p>
             {{ activation['message'] }}
         </p>
     {% else %}
-        <h3>Упсс, произошла ошибка</h3>
+        <h3>Error</h3>
         <p>
             {{ activation['message'] }}
         </p>

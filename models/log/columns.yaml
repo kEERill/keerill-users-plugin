@@ -8,22 +8,22 @@ columns:
         searchable: true
 
     user_id:
-        label: Пользователь
+        label: keerill.users::lang.user.label
         relation: user
         select: name
         searchable: true
 
     ip_address:
-        label: IP адрес
+        label: keerill.users::lang.user.ip_address
         searchable: true
     
     message:
-        label: Сообщение
+        label: keerill.users::lang.logs.message
     
     code:
-        label: Уникальный номер
+        label: keerill.users::lang.logs.code
         searchable: true
 
     created_at:
-        label: Дата
+        label: keerill.users::lang.logs.created_at
         type: datetime

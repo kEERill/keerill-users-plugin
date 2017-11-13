@@ -1,6 +1,7 @@
 <?php namespace KEERill\Users\Components;
 
 use Mail;
+use Lang;
 use Flash;
 use Event;
 use Request;
@@ -22,8 +23,8 @@ class Register extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'Регистрация',
-            'description' => 'Форма регистрации пользователя'
+            'name'        => 'keerill.users::lang.register.component_name',
+            'description' => 'keerill.users::lang.register.component_desc'
         ];
     }
 
@@ -31,14 +32,14 @@ class Register extends ComponentBase
     {
         return [
             'paramCode' => [
-                'title' => 'Параметр кода',
-                'description' => 'Параметр, в котором передаётся код активации',
+                'title' => 'keerill.users::lang.register.code',
+                'description' => 'keerill.users::lang.register.code_desc',
                 'type' => 'string',
                 'default' => 'code'
             ],
             'redirect' => [
-                'title' => 'Перенаправление',
-                'description' => 'Перенаправление на страницу после успешной регистрации',
+                'title' => 'keerill.users::lang.register.redirect',
+                'description' => 'keerill.users::lang.register.redirect_desc',
                 'type' => 'dropdown',
                 'default' => ''
             ]
@@ -86,11 +87,11 @@ class Register extends ComponentBase
     {
         try {
             if (!$this->canRegister) {
-                throw new ApplicationException("Регистрация была отключена администрацией сайта");
+                throw new ApplicationException(Lang::get('keerill.users::lang.register.register_disable'));
             }
 
             if ($this->user()) {
-                throw new ApplicationException("Вы уже авторизированы и не можете пройти регистрацию");
+                throw new ApplicationException(Lang::get('keerill.users::lang.register.is_user'));
             }
 
             /*
@@ -131,6 +132,7 @@ class Register extends ComponentBase
              */
             if ($userActivation) {
                 $this->sendActivationEmail($user);
+                Flash::success(Lang::get('keerill.users::lang.messages.user_send_mail'));
             }
 
             /*
@@ -171,21 +173,21 @@ class Register extends ComponentBase
             if (count($parts) != 2) {
                 return $this->page['activation'] = [
                     'status' => 'error', 
-                    'message' => 'Неверный код активации, проверьте правильность ссылки'
-                    ];
+                    'message' => Lang::get('keerill.users::lang.register.activation_invalid_code')
+                ];
             }
             list($userId, $code) = $parts;
             if (!strlen(trim($userId)) || !($user = AuthManager::findUserByCredentials(['id' => $userId]))) {
                 return $this->page['activation'] = [
                     'status' => 'error', 
-                    'message' => 'Пользователь с такими данными не найден'
-                    ];
+                    'message' => Lang::get('keerill.users::lang.messages.user_not_found')
+                ];
             }
             if (!$user->attemptActivation($code)) {
                 return $this->page['activation'] = [
                     'status' => 'error', 
-                    'message' => 'Неверный код активации или электронный адрес уже подтвержден'
-                    ];
+                    'message' => Lang::get('keerill.users::lang.register.activation_invalid_code')
+                ];
             }
 
             /*
@@ -195,7 +197,7 @@ class Register extends ComponentBase
 
             return $this->page['activation'] = [
                 'status' => 'success', 
-                'message' => 'Ваша почта успешна подтверждена'
+                'message' => Lang::get('keerill.users::lang.messages.user_activation_success')
                 ];
         }
         catch (\Exception $ex) {
@@ -213,10 +215,17 @@ class Register extends ComponentBase
     private function sendActivationEmail($user)
     {
         $code = implode('!', [$user->id, $user->getActivationCode()]);
+
+        $link = $this->currentPageUrl([
+            $this->property('paramCode') => $code
+        ]);
+
         $data = [
             'name' => $user->name,
-            'code' => $code
+            'code' => $code,
+            'link' => $link
         ];
+        
         Mail::send('keerill.users::mail.activate', $data, function($message) use ($user) {
             $message->to($user->email, $user->name);
         });

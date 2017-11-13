@@ -1,6 +1,7 @@
 <?php namespace KEERill\Users\Components;
 
 use Mail;
+use Lang;
 use Flash;
 use Request;
 use Redirect;
@@ -17,8 +18,8 @@ class Reset extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'Восстановление пароля',
-            'description' => 'Форма восстановления пароля'
+            'name'        => 'keerill.users::lang.reset.component_name',
+            'description' => 'keerill.users::lang.reset.component_desc'
         ];
     }
 
@@ -26,14 +27,14 @@ class Reset extends ComponentBase
     {
         return [
             'paramCode' => [
-                'title' => 'Параметр',
-                'description' => 'Параметр, в котором передаётся код',
+                'title' => 'keerill.users::lang.reset.code',
+                'description' => 'keerill.users::lang.reset.code_desc',
                 'type' => 'string',
                 'default' => 'code'
             ],
             'redirect' => [
-                'title' => 'Перенаправление',
-                'description' => 'Перенаправление на страницу после успешного восстановления пароля',
+                'title' => 'keerill.users::lang.reset.redirect',
+                'description' => 'keerill.users::lang.reset.redirect_desc',
                 'type' => 'dropdown',
                 'default' => ''
             ]
@@ -60,7 +61,7 @@ class Reset extends ComponentBase
         }
 
         if (!$user = AuthManager::findUserByCredentials(['email' => post('email')])) {
-            throw new ApplicationException(trans('Пользователь с таким Е-mail не существует'));
+            throw new ApplicationException(Lang::get('keerill.users::lang.messages.user_not_found'));
         }
 
         $code = implode('!', [$user->id, $user->getResetPasswordCode()]);
@@ -78,7 +79,7 @@ class Reset extends ComponentBase
             $message->to($user->email, $user->name);
         });
 
-        Flash::success("Письмо с дальнейшими инструкциями отправлено на вашу почту");
+        Flash::success(Lang::get('keerill.users::lang.messages.user_send_mail'));
     }
 
     /**
@@ -102,22 +103,22 @@ class Reset extends ComponentBase
              */
             $parts = explode('!', post('code'));
             if (count($parts) != 2) {
-                throw new ValidationException(['code' => 'Неверный код активации, проверьте правильность кода']);
+                throw new ValidationException(['code' => Lang::get('keerill.users::lang.reset.reset_code_invalid')]);
             }
     
             list($userId, $code) = $parts;
     
             if (!strlen(trim($userId)) || !($user = AuthManager::findUserByCredentials(['id' => $userId]))) {
-                throw new ApplicationException('Пользователь не найден');
+                throw new ApplicationException(Lang::get('keerill.users::lang.messages.user_not_found'));
             }
     
             if (!$user->attemptResetPassword($code, post('password'))) {
-                throw new ValidationException(['code' => 'Неверный код активации, проверьте правильность кода']);
+                throw new ValidationException(['code' => Lang::get('keerill.users::lang.reset.reset_code_invalid')]);
             }
     
-            Log::add($user, 'Было успешно выполнено восстановления пароля пользователя', 'user_reset');
+            Log::add($user, Lang::get('keerill.users::lang.reset.reset_success'), 'user_reset');
     
-            Flash::success('Ваш пароль был успешно восстановлен');
+            Flash::success(Lang::get('keerill.users::lang.reset.reset_success'));
     
             $redirectUrl = $this->pageUrl($this->property('redirect'));
     

@@ -2,14 +2,14 @@
     <div class="callout callout-warning">
         <div class="header">
             <i class="icon-warning"></i>
-            <h3>Пользователь не активирован!</h3>
+            <h3><?= e(trans('keerill.users::lang.messages.user_no_activated')) ?></h3>
             <p>
-                Этот пользователь не активирован и не сможет войти.
+                <?= e(trans('keerill.users::lang.users.user_no_activated')) ?>
                 <a href="javascript:;"
                     data-request="onActivate"
-                    data-request-confirm="Вы действительно хотите активировать этого пользователя?"
+                    data-request-confirm="<?= e(trans('keerill.users::lang.users.confirm_activate')) ?>"
                     data-stripe-load-indicator
-                >Активировать этого пользователя вручную</a>.
+                ><?= e(trans('keerill.users::lang.users.activate')) ?></a>.
             </p>
         </div>
     </div>

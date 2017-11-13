@@ -1,5 +1,6 @@
 <?php namespace KEERill\Users\Models;
 
+use Lang;
 use Model;
 
 /**
@@ -23,8 +24,8 @@ class Group extends Model
     ];
 
     public $attributeNames = [
-        'name' => 'Название группы',
-        'code' => 'Код группы'
+        'name' => 'keerill.users::lang.group.name',
+        'code' => 'keerill.users::lang.group.code'
     ];
 
     /**

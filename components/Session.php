@@ -1,11 +1,13 @@
 <?php namespace KEERill\Users\Components;
 
 use Mail;
-use AuthManager;
+use Lang;
 use Event;
 use Flash;
 use Request;
 use Redirect;
+use AuthManager;
+use Cms\Classes\Page;
 use ApplicationException;
 use Cms\Classes\ComponentBase;
 
@@ -16,14 +18,32 @@ class Session extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'Сессия',
-            'description' => 'Определяет пользователя по кукам или сессии'
+            'name'        => 'keerill.users::lang.session.component_name',
+            'description' => 'keerill.users::lang.session.component_desc'
         ];
     }
 
     public function defineProperties()
     {
-        return [];
+        return [
+            'page_register' => [
+                'title' => 'keerill.users::lang.session.page_register',
+                'description' => 'keerill.users::lang.session.page_register_desc',
+                'type' => 'dropdown',
+                'default' => ''
+            ],
+            'paramCode' => [
+                'title' => 'keerill.users::lang.register.code',
+                'description' => 'keerill.users::lang.register.code_desc',
+                'type' => 'string',
+                'default' => 'code'
+            ]
+        ];
+    }
+
+    public function getPageRegisterOptions()
+    {
+        return ['' => ' - none - '] + Page::sortBy('baseFileName')->lists('title', 'baseFileName');
     }
 
     public function onRun()
@@ -51,18 +71,20 @@ class Session extends ComponentBase
     {
         try {
             if (!$user = $this->user()) {
-                throw new ApplicationException("Пользователь с такими данным не найден");
+                throw new ApplicationException(Lang::get('keerill.users::lang.messages.user_not_found'));
             }
             if ($user->is_activated) {
-                throw new ApplicationException("Пользователь уже активирован");
+                throw new ApplicationException(Lang::get('keerill.users::lang.messages.user_is_activated'));
             }
-            Flash::success("Письмо с дальнейшими инструкциями по активации было выслано на указанный адрес электронной почты.");
+
+            Flash::success(Lang::get('keerill.users::lang.messages.user_send_mail'));
 
             $this->sendActivationEmail($user);
         }
-        catch (Exception $ex) {
+        catch (\Exception $ex) {
             if (Request::ajax()) throw $ex;
             else Flash::error($ex->getMessage());
+            return Redirect::back();
         }
     }
     
@@ -93,11 +115,22 @@ class Session extends ComponentBase
      */
     private function sendActivationEmail($user)
     {
+        if (!$page = $this->property('page_register')) {
+            throw new ApplicationException(Lang::get('keerill.users::lang.session.page_not_found'));
+        }
+
         $code = implode('!', [$user->id, $user->getActivationCode()]);
+        
+        $link = $this->pageUrl($page, [
+            $this->property('paramCode') => $code
+        ]);
+
         $data = [
             'name' => $user->name,
-            'code' => $code
+            'code' => $code,
+            'link' => $link
         ];
+
         Mail::send('keerill.users::mail.activate', $data, function($message) use ($user) {
             $message->to($user->email, $user->name);
         });

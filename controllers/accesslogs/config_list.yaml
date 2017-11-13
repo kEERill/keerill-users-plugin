@@ -9,7 +9,7 @@ list: $/keerill/users/models/accesslog/columns.yaml
 modelClass: KEERill\Users\Models\AccessLog
 
 # List Title
-title: Лог доступа
+title: keerill.users::lang.logs.label
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records
@@ -34,7 +34,7 @@ showSorting: true
 # Toolbar widget configuration
 toolbar:
     # Partial for toolbar buttons
-    buttons: list_toolbar
+    #buttons: list_toolbar
 
     # Search widget configuration
     search:

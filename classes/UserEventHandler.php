@@ -36,54 +36,54 @@ Class UserEventHandler
         $widget->addFields(
             [
                 'settings[control_permissions]' => [
-                    'label'   => 'Доступ к данной странице',
+                    'label'   => 'keerill.users::lang.page.control_permissions.label',
                     'type'    => 'dropdown',
                     'options' => [
-                            '0' => 'Страница доступна всем',
-                            '1' => 'Перенаправление на другую страницу'
+                            '0' => 'keerill.users::lang.page.control_permissions.options_all',
+                            '1' => 'keerill.users::lang.page.control_permissions.options_redirect'
                         ],
-                    'tab'     => 'Настройка Прав',
+                    'tab'     => 'keerill.users::lang.page.label',
                     'span'    => 'left',
-                    'comment' => 'Если это опция включена, то доступ к странице будет ограничен',
+                    'comment' => 'keerill.users::lang.page.control_permissions.comment',
                 ],
                 'settings[permission]' => [
-                    'label'   => 'Права',
+                    'label'   => 'keerill.users::lang.page.permission.label',
                     'type'    => 'dropdown',
                     'default' => '0',
                     'options' => $permOptions,
-                    'tab'     => 'Настройка Прав',
+                    'tab'     => 'keerill.users::lang.page.label',
                     'span'    => 'right',
-                    'comment' => 'В случае, если недостаточно прав, будет перенаправление',
+                    'comment' => 'keerill.users::lang.page.permission.comment',
                 ],
                 'settings[use_user_auth]' => [
-                    'label'   => 'Перенаправление авторизированного пользователя',
+                    'label'   => 'keerill.users::lang.page.use_user_auth.label',
                     'type'    => 'switch',
-                    'tab'     => 'Настройка Прав',
+                    'tab'     => 'keerill.users::lang.page.label',
                     'span'    => 'left',
-                    'comment' => 'Если это опция включена, то авторизированные пользователи будут перенаправлятся на другую страницу'
+                    'comment' => 'keerill.users::lang.page.use_user_auth.comment'
                 ],
                 'settings[page_redirect]' => [
-                    'label'   => 'Страница перенаправления гостя',
+                    'label'   => 'keerill.users::lang.page.page_redirect.label',
                     'type'    => 'dropdown',
-                    'tab'     => 'Настройка Прав',
+                    'tab'     => 'keerill.users::lang.page.label',
                     'span'    => 'right',
                     'options' => $pageOptions,
-                    'comment' => 'Перенаправление НЕ авторизированного пользователя',
+                    'comment' => 'keerill.users::lang.page.page_redirect.comment',
                 ],
                 'settings[use_referer_param]' => [
-                    'label'   => 'Параметр обратного перенаправления',
+                    'label'   => 'keerill.users::lang.page.use_referer_param.label',
                     'type'    => 'switch',
-                    'tab'     => 'Настройка Прав',
+                    'tab'     => 'keerill.users::lang.page.label',
                     'span'    => 'left',
-                    'comment' => 'В случае перенаправления, будет отправлятся параметр referer текущей страницы'
+                    'comment' => 'keerill.users::lang.page.use_referer_param.comment'
                 ],
                 'settings[page_user_redirect]' => [
-                    'label'   => 'Страница перенаправления пользователя',
+                    'label'   => 'keerill.users::lang.page.page_user_redirect.label',
                     'type'    => 'dropdown',
-                    'tab'     => 'Настройка Прав',
+                    'tab'     => 'keerill.users::lang.page.label',
                     'span'    => 'right',
                     'options' => $pageOptions,
-                    'comment' => 'Перенаправление авторизированного пользователя',
+                    'comment' => 'keerill.users::lang.page.page_user_redirect.comment',
                 ]
             ],
             'primary'

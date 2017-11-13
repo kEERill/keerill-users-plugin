@@ -1,3 +1,24 @@
-<p>This is the default markup for component Activity</p>
-
-<small>You can delete this file if you want</small>
+<table>
+    <thead>
+        <tr>
+            <th>IP address</th>
+            <th>Message</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if user_activity.count > 0 %}
+            {% for activity as user_activity %}
+                <tr>
+                    <td>{{ activity.ip_address }}</td>
+                    <td>{{ activity.message }}</td>
+                    <td>{{ activity.created_at|date }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="2">Not found activity :(</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>

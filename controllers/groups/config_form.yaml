@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Группа
+name: keerill.users::lang.group.label
 
 # Model Form Field configuration
 form: $/keerill/users/models/group/fields.yaml
@@ -16,12 +16,12 @@ defaultRedirect: keerill/users/groups
 
 # Create page
 create:
-    title: Создание
+    title: keerill.users::lang.groups.create_title
     redirect: keerill/users/groups/update/:id
     redirectClose: keerill/users/groups
 
 # Update page
 update:
-    title: Редактирование
+    title: keerill.users::lang.groups.update_title
     redirect: keerill/users/groups
     redirectClose: keerill/users/groups

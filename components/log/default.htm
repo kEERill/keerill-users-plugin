@@ -1,22 +1,25 @@
 <table>
     <thead>
         <tr>
-            <th>Пользователь</th>
-            <th>IP адрес</th>
-            <th>Сообщение</th>
-            <th>Дата</th>
+            <th>IP address</th>
+            <th>Message</th>
+            <th>Date</th>
         </tr>
     </thead>
     <tbody>
-        {% if user_logs %}
+        {% if user_logs.count > 0 %}
             {% for log in user_logs %}
                 <tr>
-                    <td>{{ log.user.name }}</td>
                     <td>{{ log.ip_address }}</td>
                     <td>{{ log.message }}</td>
                     <td>{{ log.created_at|date }}</td>
                 </tr>
             {% endfor %}
+        {% else %}
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
         {% endif %}
     </tbody>
 </table>
+{{ user_logs.render }}
