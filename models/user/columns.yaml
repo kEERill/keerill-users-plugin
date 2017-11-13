@@ -27,7 +27,6 @@ columns:
         label: keerill.users::lang.user.last_seen
         type: datetime
         format: j M Y H:i
-        default: Никогда
 
     created_at:
         label: keerill.users::lang.user.created_at
