@@ -24,8 +24,8 @@ class Settings extends Model
      * @var array The array of custom attribute names.
      */
     public $attributeNames = [
-        'del_oldAccessLogs_days' => 'Количество дней на удаление старых логов доступа',
-        'del_noActUsers_days' => 'Количество дней на удаление неактивированных пользователей'
+        'del_oldAccessLogs_days' => 'keerill.users::lang.settings.del_oldAccessLogs_days',
+        'del_noActUsers_days' => 'keerill.users::lang.settings.del_noActUsers_days'
     ];
 
     public $implement = ['System.Behaviors.SettingsModel'];
@@ -57,16 +57,16 @@ class Settings extends Model
     {
         return [
             self::ACTIVATE_AUTO => [
-                'Автоматическая',
-                'Автоматическая активация при регистрации.'
+                'keerill.users::lang.settings.activate_auto',
+                'keerill.users::lang.settings.activate_auto_desc'
             ],
             self::ACTIVATE_USER => [
-                'Стандартная',
-                'Активация при помощи электронной почты.'
+                'keerill.users::lang.settings.activate_user',
+                'keerill.users::lang.settings.activate_user_desc'
             ],
             self::ACTIVATE_ADMIN => [
-                'Ручная',
-                'Только администратор может активировать пользователя.'
+                'keerill.users::lang.settings.activate_admin',
+                'keerill.users::lang.settings.activate_admin_desc'
             ]
         ];
     }
