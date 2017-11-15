@@ -14,13 +14,11 @@ use Illuminate\Foundation\AliasLoader;
 use KEERill\Users\Classes\UserEventHandler;
 use KEERill\Users\Models\Settings as UserSettings;
 
-
 /**
  * Users Plugin Information File
  */
 class Plugin extends PluginBase
 {
-
     /**
      * @var Components Loaded
      */
@@ -37,7 +35,8 @@ class Plugin extends PluginBase
             'name'        => 'keerill.users::lang.plugin.name',
             'description' => 'keerill.users::lang.plugin.description',
             'author'      => 'kEERill',
-            'icon'        => 'icon-leaf'
+            'icon'        => 'icon-leaf',
+            'homepage'    => 'https://github.com/kEERill/keerill-users-plugin'
         ];
     }
 
@@ -172,7 +171,6 @@ class Plugin extends PluginBase
 
     public function registerSettings()
     {
-
         Event::listen('system.settings.extendItems', function ($manager) {
             \KEERill\Users\Models\Settings::filterSettingItems($manager);
         });
@@ -203,7 +201,6 @@ class Plugin extends PluginBase
                 'permissions' => ['keerill.users.users_logs']
             ]
         ];
-
     }
 
     public function registerMailTemplates()
