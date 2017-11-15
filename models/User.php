@@ -36,11 +36,11 @@ Class User extends Model
      * @var array The array of custom attribute names.
      */
     public $attributeNames = [
-        'name' => 'Имя пользователя',
-        'group' => 'Группа',
-        'email' => 'Почта пользователя',
-        'password' => 'Пароль',
-        'password_confirmation' => 'Повтор пароля'
+        'name' => 'keerill.users::lang.user.name',
+        'group' => 'keerill.users::lang.user.group',
+        'email' => 'keerill.users::lang.user.email',
+        'password' => 'keerill.users::lang.user.password',
+        'password_confirmation' => 'keerill.users::lang.user.confirm_password'
     ];
 
     /**
