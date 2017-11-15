@@ -10,6 +10,8 @@ class Group extends Model
 {
     use \October\Rain\Database\Traits\Validation;
 
+    public $implement = ['@RainLab.Translate.Behaviors.TranslatableModel'];
+
     /**
      * @var string The database table used by the model.
      */
@@ -27,6 +29,11 @@ class Group extends Model
         'name' => 'keerill.users::lang.group.name',
         'code' => 'keerill.users::lang.group.code'
     ];
+
+    /**
+     * @var array Translatable fields
+     */
+    public $translatable = ['name'];
 
     /**
      * @var array Fillable fields

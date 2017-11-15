@@ -32,3 +32,5 @@
  - Remove permissions table, function registerUserPermissions add new permission user plugin
 1.2.7:
  - Add validate post datas in save settings
+1.2.8:
+ - Fixed languages and add Translate Plugin support
