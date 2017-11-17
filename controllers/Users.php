@@ -87,7 +87,7 @@ class Users extends Controller
         $model = $this->formFindModelObject($recordId);
         $model->attemptActivation($model->activation_code);
         
-        Flash::success(Lang::get('keerill.users::lang.messages.User_activation_success'));
+        Flash::success(Lang::get('keerill.users::lang.messages.user_activation_success'));
 
         if ($redirect = $this->makeRedirect('preview', $model)) {
             return $redirect;
