@@ -35,7 +35,7 @@ class Register extends ComponentBase
                 'title' => 'keerill.users::lang.register.code',
                 'description' => 'keerill.users::lang.register.code_desc',
                 'type' => 'string',
-                'default' => 'code'
+                'default' => ''
             ],
             'redirect' => [
                 'title' => 'keerill.users::lang.register.redirect',
