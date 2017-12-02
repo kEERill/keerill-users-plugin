@@ -220,6 +220,16 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function registerReportWidgets()
+    {
+        return [
+            'KEERill\Users\ReportWidgets\Registrations' => [
+                'label'   => 'New registrations',
+                'context' => 'dashboard'
+            ]
+        ];
+    }
+
     public function registerSchedule($schedule)
     {
         $schedule->call(function () {

@@ -157,7 +157,8 @@
         'user_auth_success' => 'Login Successful',
         'user_send_mail' => 'A letter with further instructions sent to your mail',
         'user_not_perm' => 'Not enough permissions to perform this operation',
-        'user_not_perm_with' => 'Not enough permisions for :operation'
+        'user_not_perm_with' => 'Not enough permisions for :operation',
+        'invalid_days' => 'Invalid value param "days"'
     ],
     'page' => [
         'label' => 'Settings access',
@@ -236,5 +237,8 @@
     'mail' => [
         'activate' => 'A letter with instructions for activating a new user account',
         'restore' => 'A letter with instructions for password recovery'
+    ],
+    'report' => [
+        'num_days' => 'Number of days to display data for'
     ]
 ];
