@@ -34,3 +34,5 @@
  - Add validate post datas in save settings
 1.2.8:
  - Fixed languages and add Translate Plugin support
+1.2.9:
+ - Add report widget for backend "New registrations"
