@@ -141,7 +141,7 @@ Class UserEventHandler
             $refererUse = array_get($settings, 'use_referer_param');
 
             if(!AuthManager::hasAccess($permission)) {
-                $params = ($refererUse) ? ['' => sprintf('?referer=%s', urlencode($controller->pageUrl($page->baseFileName)))] : [];
+                $params = ($refererUse) ? ['referer' => sprintf('?referer=%s', urlencode($controller->pageUrl($page->baseFileName)))] : [];
                 if ($redirectUrl = $controller->pageUrl($user ? $userPage : $redirect, $params)) {
                     return Redirect::to($redirectUrl);                                                                            
                 }

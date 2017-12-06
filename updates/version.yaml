@@ -36,3 +36,5 @@
  - Fixed languages and add Translate Plugin support
 1.2.9:
  - Add report widget for backend "New registrations"
+1.2.10:
+ - Fixed URL referer
