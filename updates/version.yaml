@@ -38,3 +38,5 @@
  - Add report widget for backend "New registrations"
 1.2.10:
  - Fixed URL referer
+1.2.11:
+ - Fixed lang in component Settings
