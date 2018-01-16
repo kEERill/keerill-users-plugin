@@ -1,5 +1,6 @@
 <?php namespace KEERill\Users\Components;
 
+use Lang;
 use Event;
 use Flash;
 use Request;
