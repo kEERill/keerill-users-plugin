@@ -40,3 +40,5 @@
  - Fixed URL referer
 1.2.11:
  - Fixed lang in component Settings
+1.2.12:
+ - Fixed report widget (new Registrations)
