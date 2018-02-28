@@ -112,6 +112,10 @@ class Plugin extends PluginBase
             'keerill.users.users_logs' => [
                 'tab' => 'keerill.users::lang.plugin.name',
                 'label' => 'keerill.users::lang.permissions.usersLogs'
+            ],
+            'keerill.users.access_settings' => [
+                'tab' => 'keerill.users::lang.plugin.name',
+                'label' => 'keerill.users::lang.permissions.settings'
             ]
         ];
     }
@@ -182,7 +186,8 @@ class Plugin extends PluginBase
                 'category'    => 'keerill.users::lang.plugin.name',
                 'icon'        => 'icon-users',
                 'class'       => 'KEERill\Users\Models\Settings',
-                'order'       => 500
+                'order'       => 500,
+                'permissions' => ['keerill.users.access_settings']
             ],
             'accesslogs' => [
                 'label'       => 'keerill.users::lang.settings.accessLogs',
