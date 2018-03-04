@@ -1,6 +1,7 @@
 <?php namespace KEERill\Users\FormWidgets;
 
-use AuthManager;
+use Lang;
+use ApplicationException;
 use Backend\Classes\FormWidgetBase;
 
 
@@ -45,7 +46,7 @@ class PermissionEditor extends FormWidgetBase
         }
 
         $this->vars['checkboxMode'] = $this->getControlMode() === 'checkbox';
-        $this->vars['permissions'] = AuthManager::listTabbedPermissions();
+        $this->vars['permissions'] = $this->getOptionsFromModel($this->fieldName);
         $this->vars['baseFieldName'] = $this->getFieldName();
         $this->vars['permissionsData'] = $permissionsData;
         $this->vars['field'] = $this->formField;
@@ -75,5 +76,45 @@ class PermissionEditor extends FormWidgetBase
     protected function getControlMode()
     {
         return strlen($this->mode) ? $this->mode : 'radio';
+    }
+
+
+    /**
+     * Looks at the model for defined options.
+     *
+     * @param $field
+     * @param $fieldOptions
+     * @return mixed
+     */
+    protected function getOptionsFromModel($attribute)
+    {
+        $methodName = 'get'.studly_case($attribute).'Options';
+        if (
+            !$this->objectMethodExists($this->model, $methodName)
+        ) {
+            throw new ApplicationException(Lang::get('backend::lang.field.options_method_not_exists', [
+                'model'  => get_class($this->model),
+                'method' => $methodName,
+                'field' => $attribute
+            ]));
+        }
+
+        return $fieldOptions = $this->model->$methodName($this->data);
+    }
+
+    /**
+     * Internal helper for method existence checks.
+     *
+     * @param  object $object
+     * @param  string $method
+     * @return boolean
+     */
+    protected function objectMethodExists($object, $method)
+    {
+        if (method_exists($object, 'methodExists')) {
+            return $object->methodExists($method);
+        }
+
+        return method_exists($object, $method);
     }
 }

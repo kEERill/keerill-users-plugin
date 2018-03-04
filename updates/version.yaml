@@ -44,3 +44,5 @@
  - Fixed report widget (new Registrations)
 1.2.13:
  - Fixed settings permission
+1.2.14:
+ - Updated Permissions Widget. Add method getPermissionsOptions

@@ -139,7 +139,7 @@ Class User extends Model
      * @var array $revisionable
      */
     protected $revisionable = ['name', 'email', 'group', 'balance'];
-
+    
     /**
      * @return mixed Returns the user's login.
      */
