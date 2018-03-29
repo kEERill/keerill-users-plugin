@@ -45,6 +45,10 @@
 1.2.13:
  - Fixed settings permission
 1.2.14:
+<<<<<<< HEAD
  - Updated Permissions Widget. Add method getPermissionsOptions
 1.2.15:
   - Fixed return code 500 in Auth, Register and Settings components
+=======
+ - Updated Permissions Widget. Add method getPermissionsOptions
+>>>>>>> 012811318548f0deefc05df0a8514ad2a4a475d2
