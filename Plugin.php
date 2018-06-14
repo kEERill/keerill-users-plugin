@@ -10,6 +10,7 @@ use KEERill\Users\Models\User;
 use KEERill\Users\Models\Group;
 use KEERill\Users\Models\AccessLog;
 use System\Classes\SettingsManager;
+use RainLab\Notify\Classes\Notifier;
 use Illuminate\Foundation\AliasLoader;
 use KEERill\Users\Classes\UserEventHandler;
 use KEERill\Users\Models\Settings as UserSettings;
@@ -55,6 +56,11 @@ class Plugin extends PluginBase
         });
 
         \Event::subscribe(new UserEventHandler);
+        
+        /*
+         * Compatability with RainLab.Notify
+         */
+        $this->bindNotificationEvents();
     }
 
     /**
@@ -112,6 +118,10 @@ class Plugin extends PluginBase
             'keerill.users.users_logs' => [
                 'tab' => 'keerill.users::lang.plugin.name',
                 'label' => 'keerill.users::lang.permissions.usersLogs'
+            ],
+            'keerill.users.access_settings' => [
+                'tab' => 'keerill.users::lang.plugin.name',
+                'label' => 'keerill.users::lang.permissions.settings'
             ]
         ];
     }
@@ -182,7 +192,8 @@ class Plugin extends PluginBase
                 'category'    => 'keerill.users::lang.plugin.name',
                 'icon'        => 'icon-users',
                 'class'       => 'KEERill\Users\Models\Settings',
-                'order'       => 500
+                'order'       => 500,
+                'permissions' => ['keerill.users.access_settings']
             ],
             'accesslogs' => [
                 'label'       => 'keerill.users::lang.settings.accessLogs',
@@ -228,6 +239,37 @@ class Plugin extends PluginBase
                 'context' => 'dashboard'
             ]
         ];
+    }
+
+    public function registerNotificationRules()
+    {
+        return [
+            'events' => [
+                \KEERill\Tickets\NotifyRules\TicketCreateMessageEvent::class,
+            ],
+            'conditions' => [
+                \KEERill\Users\NotifyRules\UserAttributeCondition::class
+            ],
+            'groups' => [
+                'user' => [
+                    'label' => 'Users',
+                    'icon' => 'icon-users'
+                ],
+            ],
+        ];
+    }
+
+    protected function bindNotificationEvents()
+    {
+        if (!class_exists(Notifier::class)) {
+            return;
+        }
+
+        Notifier::instance()->registerCallback(function($manager) {
+            $manager->registerGlobalParams([
+                'user' => AuthManager::getUser()
+            ]);
+        });
     }
 
     public function registerSchedule($schedule)

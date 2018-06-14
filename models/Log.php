@@ -56,7 +56,7 @@ class Log extends Model
      * 
      * @return self
      */
-    public static function add($user, $message = '', $code = '', $data = []) 
+    public static function add($user, $message = '', $code = '', array $data = []) 
     {
         if (!UserSettings::get('use_logs')) {
             return false;

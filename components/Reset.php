@@ -125,10 +125,12 @@ class Reset extends ComponentBase
             if ($redirectUrl = post('redirect', $redirectUrl)) {
                 return Redirect::to($redirectUrl);
             }
-        } catch(\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             if (Request::ajax()) throw $ex;
             else Flash::error($ex->getMessage());
-            return Redirect::refresh();
+            
+            return Redirect::back();
         }
     }
 

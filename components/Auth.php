@@ -100,6 +100,7 @@ class Auth extends ComponentBase
         catch (\Exception $ex) {
             if (Request::ajax()) throw $ex;
             else Flash::error($ex->getMessage());
+            
             return Redirect::back();
         }
     }

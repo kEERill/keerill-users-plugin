@@ -2,6 +2,7 @@
 
 use Lang;
 use Model;
+use AuthManager;
 
 /**
  * Group Model
@@ -54,5 +55,13 @@ class Group extends Model
     ];
 
     public $jsonable = ['permissions'];
+
+    /**
+     * @return array 
+     */
+    public function getPermissionsOptions()
+    {
+        return AuthManager::listTabbedPermissions();
+    }
 
 }

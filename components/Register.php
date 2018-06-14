@@ -150,9 +150,10 @@ class Register extends ComponentBase
 
             return Redirect::back();
         }
-        catch (Exception $ex) {
+        catch (\Exception $ex) {
             if (Request::ajax()) throw $ex;
             else Flash::error($ex->getMessage());
+            
             return Redirect::back();
         }
     }

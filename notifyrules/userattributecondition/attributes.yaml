@@ -1,0 +1,19 @@
+# ===================================
+#  Condition Attribute Definitions
+# ===================================
+
+attributes:
+    name:
+        label: Name
+
+    email:
+        label: Email address
+
+    group_id:
+        label: Group
+        type: relation
+        relation:
+            model: KEERill\Users\Models\Group
+            label: Name
+            nameFrom: name
+            keyFrom: id

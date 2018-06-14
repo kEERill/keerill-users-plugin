@@ -40,3 +40,11 @@
  - Fixed URL referer
 1.2.11:
  - Fixed lang in component Settings
+1.2.12:
+ - Fixed report widget (new Registrations)
+1.2.13:
+ - Fixed settings permission
+1.2.14:
+ - Updated Permissions Widget. Add method getPermissionsOptions
+1.2.15:
+  - Fixed return code 500 in Auth, Register and Settings components

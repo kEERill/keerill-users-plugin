@@ -77,15 +77,15 @@ class Registrations extends ReportWidgetBase
     {
         $all = [];
         foreach ($items as $item)
-        {
-
-            $timestamp = strtotime($item->created_at) * 1000;
+        {           
             $day = $item->created_at->format('Y-m-d');
 
             if (!isset($all[$day])) {
+                $timestamp = $item->created_at->hour(3)->minute(0)->second(0)->timestamp;
+
                 $all[$day] = [
-                    'timestamp' => $timestamp,
-                    'count' => 0,
+                    'timestamp' => $timestamp * 1000,
+                    'count' => 0
                 ];
             }
 
@@ -108,11 +108,11 @@ class Registrations extends ReportWidgetBase
         }
 
         $all = [];
-        $time = Carbon::now();
+        $time = (Carbon::now())->hour(0)->minute(0)->second(0);
 
         for($i = 0; $i <= $days; $i++) {
             $all[$time->format('Y-m-d')] = [
-                'timestamp' => strtotime($time) * 1000,
+                'timestamp' => $time->timestamp * 1000,
                 'count' => 0
             ];
 
