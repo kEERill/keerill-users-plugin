@@ -236,6 +236,30 @@ Class User extends Model
     {
         return $this->is_banned_reason ?: Lang::get('keerill.users::lang.user.ban_no_reason');
     }
+    
+    /**
+     * Returns the variables available when sending a user notification.
+     * @return array
+     */
+    public function getNotificationVars()
+    {
+        $vars = [
+            'name'     => $this->name,
+            'email'    => $this->email,
+            'group_id' => $this->group_id,
+            'group_name' => $this->group->name
+        ];
+        
+        /*
+         * Extensibility
+         */
+        $result = Event::fire('keerill.users.getNotificationVars', [$this]);
+        if ($result && is_array($result)) {
+            $vars = call_user_func_array('array_merge', $result) + $vars;
+        }
+
+        return $vars;
+    }
 
     /**
      * Проверка, заблокирован ли пользователь

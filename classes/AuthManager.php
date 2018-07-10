@@ -354,7 +354,7 @@ class AuthManager
      * @param array $credentials The user login details
      * @param bool $remember Store a non-expire cookie for the user
      */
-    public function authenticate(array $credentials, $remember = true, $login = true, $customMessage = '')
+    public function authenticate(array $credentials, $remember = true, $customMessage = '')
     {
             
         $customMessage = $customMessage ?: 'keerill.users::lang.messages.user_auth';
@@ -427,12 +427,11 @@ class AuthManager
          * Очищаем все попытки авторизации
          */
         if ($this->useThrottle) {
-            $user->clearResetPassword();
+            $throttle->clearLoginAttempts();
         }
-        
-        if ($login) {
-            $this->login($user, $remember);
-        }
+
+        $user->clearResetPassword();
+        $this->login($user, $remember);
 
         /*
          * Добавляем запись о том, что пользователь успешно авторизировался

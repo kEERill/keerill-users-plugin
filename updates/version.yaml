@@ -49,3 +49,5 @@
 1.2.15:
  - Fixed return code 500 in Auth, Register and Settings components
  - Updated Permissions Widget. Add method getPermissionsOptions
+1.2.16:
+ - Fixed clearLoginAttempts and remove $login in authenticate
